@@ -49,15 +49,12 @@
 	<p>Popular Quizzes</p>
 	<ul>
 	<%
-		ArrayList<ArrayList<String>> rankings = (ArrayList<ArrayList<String>>)request.getServletContext().getAttribute("Rankings");
-		if(rankings == null || rankings.get(0).isEmpty() || rankings.isEmpty()) {
+		List<Quiz> rankings = (LinkedList<Quiz>)request.getServletContext().getAttribute("QuizRankings");
+		if(rankings == null || rankings.isEmpty()) {
 			out.println("<li>No Current Popular Quizzes</li>");
 		} else {
-			ArrayList<String> popQuizzes = rankings.get(0);
-			String name;
-			for(int i= 0; i < popQuizzes.size(); i++) {
-				name = popQuizzes.get(i);
-				out.println("<li><a href=\"quiz.jsp?id=" + name + "\">" + name + "</a></li>");
+			for (Quiz q: rankings) {
+				out.println("<li><a href=\"QuizServlet?id=" + q.getId() + "\">" + q.getName() + "</a></li>");
 			}
 		}
 	%>
@@ -67,14 +64,11 @@
 	<p>Recently Created Quizzes</p>
 	<ul>
 	<%
-		if(rankings == null || rankings.isEmpty() || rankings.get(1).isEmpty()) {
+		if(rankings == null || rankings.isEmpty()) {
 			out.println("<li>No Recently Created Quizzes</li>");
 		} else {
-			ArrayList<String> recCrQuizzes = rankings.get(1);
-			String name;
-			for(int i= 0; i < recCrQuizzes.size(); i++) {
-				name = recCrQuizzes.get(i);
-				out.println("<li><a href=\"quiz.jsp?id=" + name + "\">" + name + "</a></li>");
+			for (Quiz q: rankings) {
+				out.println("<li><a href=\"QuizServlet?id=" + q.getId() + "\">" + q.getName() + "</a></li>");
 			}
 		}
 	%>
@@ -84,14 +78,11 @@
 	<p>Your Recently Taken Quizzes</p>
 	<ul>
 	<%
-		if(rankings == null || rankings.isEmpty() || rankings.get(2).isEmpty()) {
-			out.println("<li>No Recently Taken Quizzes</li>");
+		if(rankings == null || rankings.isEmpty()) {
+			out.println("<li>You Have No Recently Taken Quizzes</li>");
 		} else {
-			ArrayList<String> yourRecTkQuizzes = rankings.get(2);
-			String name;
-			for(int i= 0; i < yourRecTkQuizzes.size(); i++) {
-				name = yourRecTkQuizzes.get(i);
-				out.println("<li><a href=\"quiz.jsp?id=" + name + "\">" + name + "</a></li>");
+			for (Quiz q: rankings) {
+				out.println("<li><a href=\"QuizServlet?id=" + q.getId() + "\">" + q.getName() + "</a></li>");
 			}
 		}
 	%>
@@ -101,17 +92,14 @@
 	<p>Your Recently Created Quizzes</p>
 	<ul>
 		<%
-		if(rankings == null || rankings.isEmpty() || rankings.get(3).isEmpty()) {
-			out.println("<li>You Have Not Recently Created Any Quizzes!</li>");
-		} else {
-			ArrayList<String> yourRecCrQuizzes = rankings.get(3);
-			String name;
-			for(int i= 0; i < yourRecCrQuizzes.size(); i++) {
-				name = yourRecCrQuizzes.get(i);
-				out.println("<li><a href=\"quiz.jsp?id=" + name + "\">" + name + "</a></li>");
+			if(rankings == null || rankings.isEmpty()) {
+				out.println("<li>You Have No Recently Created Quizzes</li>");
+			} else {
+				for (Quiz q: rankings) {
+					out.println("<li><a href=\"QuizServlet?id=" + q.getId() + "\">" + q.getName() + "</a></li>");
+				}
 			}
-		}
-	%>
+		%>
 	</ul>
 </section>
 <div style="overflow:auto" id=Announcements>

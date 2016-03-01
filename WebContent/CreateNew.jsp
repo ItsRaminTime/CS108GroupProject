@@ -7,6 +7,7 @@
 <title>Create Page</title>
 </head>
 <body>
+<%@include file="NavBar.jsp" %>
 <h1>Create New Account</h1>
 <p>Please enter proposed name and password.</p>
 <form action="CreateAccountServlet" method="post">

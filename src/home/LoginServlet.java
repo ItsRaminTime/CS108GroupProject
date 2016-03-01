@@ -3,6 +3,7 @@ package home;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -53,15 +54,13 @@ public class LoginServlet extends HttpServlet {
 			out.println("</form>");
 			out.println("<a href=\"CreateNewPage.html\">Create New Account</a>");
 		} else if(accMan.accountExists(name) && accMan.passwordMatchesAccount(name, password)) {
-			if(request.getServletContext().getAttribute("Rankings") == null) {
-				// TODO: temporary setting it always to null until mason implements quizzes
-				//ArrayList<ArrayList<String>> rankings = new ArrayList<ArrayList<String>>();
-				//request.getServletContext().setAttribute("Rankings", rankings);
-			}
+			QuizManager quizMan = (QuizManager) this.getServletContext().getAttribute("Quiz Manager");
+			List<Quiz> rankings = quizMan.getPopularQuizzes();
+			request.getServletContext().setAttribute("QuizRankings", rankings);
+			
 			RequestDispatcher dispatcher = request.getRequestDispatcher("HomePage.jsp");
 			dispatcher.forward(request, response);
 		}
-	//	doGet(request, response);
 	}
 
 }
