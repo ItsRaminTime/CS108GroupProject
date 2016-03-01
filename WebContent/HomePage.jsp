@@ -1,13 +1,19 @@
-</html><%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="java.util.*, home.*"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<%@ page import ="home.*" %>
+<%@ page import ="java.util.*" %>
+
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>HomePage</title>
 </head>
 <body>
+
+<%@include file="NavBar.jsp" %>
+
 <h1>Welcome <%=request.getSession().getAttribute("Username")%></h1>
 <section id=Messages>
 	<%
@@ -44,7 +50,7 @@
 	<ul>
 	<%
 		ArrayList<ArrayList<String>> rankings = (ArrayList<ArrayList<String>>)request.getServletContext().getAttribute("Rankings");
-		if(rankings.isEmpty() || rankings.get(0).isEmpty()) {
+		if(rankings == null || rankings.get(0).isEmpty() || rankings.isEmpty()) {
 			out.println("<li>No Current Popular Quizzes</li>");
 		} else {
 			ArrayList<String> popQuizzes = rankings.get(0);
@@ -61,7 +67,7 @@
 	<p>Recently Created Quizzes</p>
 	<ul>
 	<%
-		if(rankings.isEmpty() || rankings.get(1).isEmpty()) {
+		if(rankings == null || rankings.isEmpty() || rankings.get(1).isEmpty()) {
 			out.println("<li>No Recently Created Quizzes</li>");
 		} else {
 			ArrayList<String> recCrQuizzes = rankings.get(1);
@@ -78,7 +84,7 @@
 	<p>Your Recently Taken Quizzes</p>
 	<ul>
 	<%
-		if(rankings.isEmpty() || rankings.get(2).isEmpty()) {
+		if(rankings == null || rankings.isEmpty() || rankings.get(2).isEmpty()) {
 			out.println("<li>No Recently Taken Quizzes</li>");
 		} else {
 			ArrayList<String> yourRecTkQuizzes = rankings.get(2);
@@ -95,7 +101,7 @@
 	<p>Your Recently Created Quizzes</p>
 	<ul>
 		<%
-		if(rankings.isEmpty() || rankings.get(3).isEmpty()) {
+		if(rankings == null || rankings.isEmpty() || rankings.get(3).isEmpty()) {
 			out.println("<li>You Have Not Recently Created Any Quizzes!</li>");
 		} else {
 			ArrayList<String> yourRecCrQuizzes = rankings.get(3);
@@ -150,7 +156,5 @@
 	%>
 	</ul>
 </section>
-<a href="QuizLibrary.jsp">Quiz Library</a>
-<a href="CreateNewQuiz.jsp">Create New Quiz</a>
 </body>
 </html>
