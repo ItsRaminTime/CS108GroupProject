@@ -31,8 +31,6 @@ for (int i=0; i<usr.quizzesTaken.size(); i++) {
 <br>
 <%
 for (int i=0; i<usr.friends.size(); i++) {
-	//out.println(usr.friends.get(i).name);
-	//out.println("<br>");
 	User curUsr = usr.friends.get(i);
 	String line = "<li>";
     line += "<a href=\"friend.jsp?id=";
