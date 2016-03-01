@@ -59,18 +59,4 @@ public class AccountManager {
 		accounts.add(newAccount);
 		return true;
 	}
-	
-	/*public void printAccountMan() {
-		for(int i = 0; i < accounts.size(); i++) {
-			System.out.println(accounts.get(i).name);
-			System.out.println(accounts.get(i).password);
-		}
-	}
-	
-	public static void main(String[] args) {
-		AccountManager accMan = new AccountManager();
-		accMan.printAccountMan();
-		accMan.createNewAccount("hillary", "yey");
-		accMan.printAccountMan();
-	}*/
 }

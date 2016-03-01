@@ -54,8 +54,9 @@ public class LoginServlet extends HttpServlet {
 			out.println("<a href=\"CreateNewPage.html\">Create New Account</a>");
 		} else if(accMan.accountExists(name) && accMan.passwordMatchesAccount(name, password)) {
 			if(request.getServletContext().getAttribute("Rankings") == null) {
-				ArrayList<ArrayList<String>> rankings = new ArrayList<ArrayList<String>>();
-				request.getServletContext().setAttribute("Rankings", rankings);
+				// TODO: temporary setting it always to null until mason implements quizzes
+				//ArrayList<ArrayList<String>> rankings = new ArrayList<ArrayList<String>>();
+				//request.getServletContext().setAttribute("Rankings", rankings);
 			}
 			RequestDispatcher dispatcher = request.getRequestDispatcher("HomePage.jsp");
 			dispatcher.forward(request, response);
