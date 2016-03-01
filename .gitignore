@@ -1,6 +1,8 @@
-.classpath
+# Added for CS108 Project
+*.jsdtscope  
+*.class*
 
-*.class
+# The following are the what came with Github's default Java .gitignore
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
