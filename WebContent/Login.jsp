@@ -4,9 +4,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>LOGIN</title>
+<title>Login</title>
 </head>
 <body>
+<%@include file="NavBar.jsp" %>
 <h1>Welcome to the Quiz Page</h1>
 <p>Please log in.</p>
 <form action="LoginServlet" method="post">

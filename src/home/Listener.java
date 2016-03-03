@@ -29,10 +29,14 @@ public class Listener implements ServletContextListener {
 	/**
      * @see ServletContextListener#contextInitialized(ServletContextEvent)
      */
-    public void contextInitialized(ServletContextEvent arg0)  { 
-         AccountManager accMan = new AccountManager();
-         ServletContext context = arg0.getServletContext();
-         context.setAttribute("Account Manager", accMan);
+    public void contextInitialized(ServletContextEvent arg0)  {
+    	ServletContext context = arg0.getServletContext();
+    	
+        AccountManager accMan = new AccountManager(); 
+        context.setAttribute("Account Manager", accMan);
+         
+        QuizManager quizMan = new QuizManager(); 
+        context.setAttribute("Quiz Manager", quizMan);
     }
 	
 }

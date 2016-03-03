@@ -35,3 +35,13 @@
 	color: white;
 	border: 1px solid white;
 }
+
+#navbar .home-link {
+	background-color: grey;
+	color: white;
+	border: 1px solid black;
+}
+
+#navbar .home-link:hover {
+    background-color: orange;
+}
