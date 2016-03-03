@@ -5,7 +5,6 @@ import java.util.*;
 public class User {
 	
 	public String name;
-	public String id;
 	public String password;
 	
 	public ArrayList<String> quizzesTaken;

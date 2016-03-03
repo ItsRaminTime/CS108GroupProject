@@ -8,8 +8,6 @@ public class AccountManager {
 	
 	public AccountManager() {
 		accounts = new ArrayList<User>();
-		createNewAccount("Patrick", "1234");
-		createNewAccount("Molly", "FloPup");
 	}
 	
 	public boolean accountExists(String name) {

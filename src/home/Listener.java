@@ -32,14 +32,14 @@ public class Listener implements ServletContextListener {
     public void contextInitialized(ServletContextEvent arg0)  {
     	ServletContext context = arg0.getServletContext();
     	
-    //	Database db = new Database();
+    	//Database db = new Database();
     	
         AccountManager accMan = new AccountManager(); 
-     //   accMan.accounts = db.users;
+        //accMan.accounts = db.users;
         context.setAttribute("Account Manager", accMan);
          
         QuizManager quizMan = new QuizManager(); 
-   //     quizMan.allQuizzes = db.quizzes;
+        //quizMan.allQuizzes = db.quizzes;
         context.setAttribute("Quiz Manager", quizMan);
     }
 	

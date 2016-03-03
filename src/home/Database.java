@@ -5,10 +5,10 @@ import java.sql.*;
 
 public class Database {
 
-	public static final String MYSQL_USERNAME = "ccs108rahmari";
-	public static final String MYSQL_PASSWORD = "nggD9zLqkvr2Wgnh";
+	public static final String MYSQL_USERNAME = "ccs108masons";
+	public static final String MYSQL_PASSWORD = "sdkgH2RmvvmxBjrZ";
 	public static final String MYSQL_DATABASE_SERVER = "mysql-user.stanford.edu";
-	public static final String MYSQL_DATABASE_NAME = "c_cs108_rahmari";
+	public static final String MYSQL_DATABASE_NAME = "c_cs108_masons";
 
 	public ArrayList<User> users;
 	public ArrayList<Quiz> quizzes;
