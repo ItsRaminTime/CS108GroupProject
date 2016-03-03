@@ -4,15 +4,15 @@ import java.util.*;
 
 public class QuizManager {
 	
-	private LinkedList<Quiz> allQuizzes;
+	public ArrayList<Quiz> allQuizzes;
 	
 	public QuizManager() {
-		allQuizzes = new LinkedList<Quiz>();
+		allQuizzes = new ArrayList<Quiz>();
 		addDefaultQuizzes();
 	}
 	
 	public List<Quiz> getPopularQuizzes() {
-		return new LinkedList<Quiz>(allQuizzes);
+		return new ArrayList<Quiz>(allQuizzes);
 	}
 	
 	public Quiz getQuizById(int id) {

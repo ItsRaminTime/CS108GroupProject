@@ -4,7 +4,7 @@ import java.util.*;
 
 public class AccountManager {
 	
-	private ArrayList<Account> accounts;
+	public ArrayList<Account> accounts;
 	
 	public class Account {
 		

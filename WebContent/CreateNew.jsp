@@ -12,7 +12,7 @@
 <p>Please enter proposed name and password.</p>
 <form action="CreateAccountServlet" method="post">
 	User Name: <input type="text" name="Name"><br>
-	Password: <input type="text" name="Password"><br>
+	Password: <input type="password" name="Password"><br>
 	<input type="submit" value="Register">
 </form>
 <a href="AdministratorPage.jsp">Login as Administrator</a>

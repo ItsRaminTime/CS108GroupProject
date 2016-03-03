@@ -42,6 +42,7 @@ public class CreateAccountServlet extends HttpServlet {
 		String name = request.getParameter("Name");
 		request.getSession().setAttribute("Username", name);
 		String password = request.getParameter("Password");
+		request.getSession().setAttribute("Password", password);
 		if(!accMan.accountExists(name)) {
 			accMan.createNewAccount(name, password);
 			

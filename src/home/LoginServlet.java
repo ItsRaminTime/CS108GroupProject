@@ -43,6 +43,7 @@ public class LoginServlet extends HttpServlet {
 		String name = request.getParameter("Name");
 		request.getSession().setAttribute("Username", name);
 		String password = request.getParameter("Password");
+		request.getSession().setAttribute("Password", password);
 		if(!accMan.accountExists(name) || !accMan.passwordMatchesAccount(name, password) ) {
 			PrintWriter out = response.getWriter();
 			out.println("<h1>Please Try Again</h1>");
@@ -52,7 +53,7 @@ public class LoginServlet extends HttpServlet {
 			out.println("Password: <input type=\"text\" name=\"Password\"><br>");
 			out.println("<input type=\"submit\" value=\"Login\">");
 			out.println("</form>");
-			out.println("<a href=\"CreateNewPage.html\">Create New Account</a>");
+			out.println("<a href=\"CreateNew.html\">Create New Account</a>");
 		} else if(accMan.accountExists(name) && accMan.passwordMatchesAccount(name, password)) {
 			QuizManager quizMan = (QuizManager) this.getServletContext().getAttribute("Quiz Manager");
 			List<Quiz> rankings = quizMan.getPopularQuizzes();

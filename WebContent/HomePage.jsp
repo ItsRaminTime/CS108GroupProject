@@ -49,12 +49,12 @@
 	<p>Popular Quizzes</p>
 	<ul>
 	<%
-		List<Quiz> rankings = (LinkedList<Quiz>)request.getServletContext().getAttribute("QuizRankings");
+		List<Quiz> rankings = (ArrayList<Quiz>)request.getServletContext().getAttribute("QuizRankings");
 		if(rankings == null || rankings.isEmpty()) {
 			out.println("<li>No Current Popular Quizzes</li>");
 		} else {
 			for (Quiz q: rankings) {
-				out.println("<li><a href=\"QuizServlet?id=" + q.getId() + "\">" + q.getName() + "</a></li>");
+				out.println("<li><a href=\"QuizWelcome.jsp?id=" + q.getId() + "\">" + q.getName() + "</a></li>");
 			}
 		}
 	%>
@@ -68,7 +68,7 @@
 			out.println("<li>No Recently Created Quizzes</li>");
 		} else {
 			for (Quiz q: rankings) {
-				out.println("<li><a href=\"QuizServlet?id=" + q.getId() + "\">" + q.getName() + "</a></li>");
+				out.println("<li><a href=\"QuizWelcome.jsp?id=" + q.getId() + "\">" + q.getName() + "</a></li>");
 			}
 		}
 	%>
@@ -82,7 +82,7 @@
 			out.println("<li>You Have No Recently Taken Quizzes</li>");
 		} else {
 			for (Quiz q: rankings) {
-				out.println("<li><a href=\"QuizServlet?id=" + q.getId() + "\">" + q.getName() + "</a></li>");
+				out.println("<li><a href=\"QuizWelcome.jsp?id=" + q.getId() + "\">" + q.getName() + "</a></li>");
 			}
 		}
 	%>
@@ -96,7 +96,7 @@
 				out.println("<li>You Have No Recently Created Quizzes</li>");
 			} else {
 				for (Quiz q: rankings) {
-					out.println("<li><a href=\"QuizServlet?id=" + q.getId() + "\">" + q.getName() + "</a></li>");
+					out.println("<li><a href=\"QuizWelcome.jsp?id=" + q.getId() + "\">" + q.getName() + "</a></li>");
 				}
 			}
 		%>
