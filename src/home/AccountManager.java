@@ -4,29 +4,10 @@ import java.util.*;
 
 public class AccountManager {
 	
-	private ArrayList<Account> accounts;
-	
-	public class Account {
-		
-		private String name;
-		private String password;
-		
-		public Account(String enteredName, String enteredPassword) {
-			this.name = enteredName;
-			this.password = enteredPassword;
-		}
-		
-		public String getPassword() {
-			return this.password;
-		}
-		
-		public String getName() {
-			return this.name;
-		}
-	}
+	private ArrayList<User> accounts;
 	
 	public AccountManager() {
-		accounts = new ArrayList<Account>();
+		accounts = new ArrayList<User>();
 		createNewAccount("Patrick", "1234");
 		createNewAccount("Molly", "FloPup");
 	}
@@ -55,7 +36,7 @@ public class AccountManager {
 				return false;
 			}
 		}
-		Account newAccount = new Account(name, password);
+		User newAccount = new User(name, password);
 		accounts.add(newAccount);
 		return true;
 	}

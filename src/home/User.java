@@ -6,6 +6,7 @@ public class User {
 	
 	public String name;
 	public String id;
+	public String password;
 	
 	public ArrayList<String> quizzesTaken;
 	public ArrayList<User> friends;
@@ -17,8 +18,10 @@ public class User {
 	public String lastAction;
 	
 	
-	public User() {
+	public User(String name, String password) {
 		quizzesTaken = new ArrayList<String>();
 		friends = new ArrayList<User>();
+		this.name = name;
+		this.password = password;
 	}
 }
