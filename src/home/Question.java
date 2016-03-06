@@ -1,9 +1,8 @@
 package home;
 
-public class Question {
+public class Question implements java.io.Serializable {
 	protected boolean correct = false;
 	protected String displayStr = "";
-	protected String jsp = ""; 
 	protected String correctAnswer = "";
 	protected String givenAnswer = "";
 	
@@ -21,10 +20,6 @@ public class Question {
 	
 	public String getGivenAnswer() {
 		return givenAnswer;
-	}
-
-	public String getJsp() {
-		return jsp;
 	}
 	
 	public void setResponse(String givenAnswer) {

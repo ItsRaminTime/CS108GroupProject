@@ -1,7 +1,11 @@
 package home;
 
-import java.util.*;
-import java.sql.*;
+import home.*;                                                                     
+import java.io.IOException;                                                        
+import java.sql.*;                                                                 
+import java.util.*;                                                                
+import javax.sql.rowset.serial.SerialBlob;                                         
+import javax.sql.rowset.serial.SerialException; 
 
 public class Database {
 
@@ -10,47 +14,65 @@ public class Database {
 	public static final String MYSQL_DATABASE_SERVER = "mysql-user.stanford.edu";
 	public static final String MYSQL_DATABASE_NAME = "c_cs108_masons";
 
-	public ArrayList<User> users;
-	public ArrayList<Quiz> quizzes;
-
-	public Database()  {
-	
-		users = new ArrayList<User>();
-		quizzes = new ArrayList<Quiz>();
+	Connection con;
+	Statement stmt;
+	public Database() {
 
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-
-			Connection con = DriverManager.getConnection("jdbc:mysql://" + MYSQL_DATABASE_SERVER, MYSQL_USERNAME, MYSQL_PASSWORD);
-
-			Statement stmt = con.createStatement();
+			con = DriverManager.getConnection("jdbc:mysql://" + MYSQL_DATABASE_SERVER, MYSQL_USERNAME, MYSQL_PASSWORD);
+			stmt = con.createStatement();
 			stmt.executeQuery("USE " + MYSQL_DATABASE_NAME);
-			ResultSet rs = stmt.executeQuery("SELECT * FROM users");
-			
-			while(rs.next()) {
-				User user;
-				user = (User)rs.getBlob("data");
-				users.add(user);
-			}
-			
-			rs = stmt.executeQuery("SELECT * FROM quizzes");
-			
-			while(rs.next()) {
-				Quiz quiz;
-				quiz = (Quiz)rs.getBlob("data");
-				quizzes.add(quiz);
-			}
-			con.close();
-
 		} catch (SQLException e) {
-			System.out.println("SQL Exception!");
+			e.printStackTrace();
 			System.exit(0);
-
 		} catch (ClassNotFoundException e) {
 			System.out.println("Class Not Found Exception!");
+			e.printStackTrace();
 			System.exit(0);
+		} 
+	}
+	
+	public ResultSet runQuery(String query) {
+		try {
+			return stmt.executeQuery(query);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	// Inserts a single quiz
+	public void insertQuiz(Quiz quiz) 
+			throws SerialException, SQLException, IOException {
+		byte[] bytes = Serializer.serialize(quiz);
+		Blob blob = new SerialBlob(bytes);		
+		String sql = "INSERT INTO quizzes (id, data) VALUES (?, ?)";
+	    PreparedStatement stmt = con.prepareStatement(sql);
+	    stmt.setLong(1, quiz.id);
+	    stmt.setBinaryStream(2, blob.getBinaryStream(), (int) blob.length());
+	    stmt.execute();
+	}
+	
+	// Inserts a single user
+	public void insertUser(User user) 
+			throws SerialException, SQLException, IOException {
+		byte[] bytes = Serializer.serialize(user);
+		Blob blob = new SerialBlob(bytes);		
+		String sql = "INSERT INTO users (name, data) VALUES (?, ?)";
+	    PreparedStatement stmt = con.prepareStatement(sql);
+	    stmt.setString(1, user.name);
+	    stmt.setBinaryStream(2, blob.getBinaryStream(), (int) blob.length());
+	    stmt.execute();
+	}
+	
+	// Call when context is destroyed
+	public void close() {
+		try {
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 	}
-
 }
-

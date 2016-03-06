@@ -1,8 +1,11 @@
 package home;
 
+import java.io.IOException;
+import java.sql.Blob;
+import java.sql.SQLException;
 import java.util.*;
 
-public class User {
+public class User implements java.io.Serializable {
 	
 	public String name;
 	public String password;
@@ -16,11 +19,16 @@ public class User {
 	
 	public String lastAction;
 	
-	
 	public User(String name, String password) {
 		quizzesTaken = new ArrayList<String>();
 		friends = new ArrayList<User>();
 		this.name = name;
 		this.password = password;
+	}
+	
+	public static User blobToUser(Blob blob) 
+			throws ClassNotFoundException, IOException, SQLException {
+		byte[] uBytes = blob.getBytes(1, (int) blob.length());
+		return (User) Serializer.deserialize(uBytes);
 	}
 }

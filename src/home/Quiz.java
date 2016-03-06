@@ -1,53 +1,58 @@
 package home;
 
+import java.io.IOException;
+import java.sql.Blob;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Quiz {
+public class Quiz implements java.io.Serializable {
 
-	private String quizName;
-	private List<Question> questions;
-	private int id;
-	
+	public int id;
+	public String name;
+	private List<Question> questions;	
 	private static int numQuizzes = 0;
 	
-	public Quiz(String quizName) {
+	// Initializes quiz
+	public Quiz(String name) {
 		id = numQuizzes;
+		this.name = name;
+		questions = new ArrayList<Question>();
 		numQuizzes++;
-		this.quizName = quizName;
-		questions = null;
 	}
 	
-	public void initDefaultQuiz1() {
-		questions = new LinkedList<Question>();
-		questions.add(new ResponseQuestion("What is 1 + 1?", "2"));
-		questions.add(new ResponseQuestion("_____ is the president.", "Obama"));
-		questions.add(new ResponseQuestion("How many states are there?", "50"));
+	// Takes in a blob, returns a quiz
+	public static Quiz blobToQuiz(Blob blob) 
+			throws ClassNotFoundException, IOException, SQLException {
+		byte[] bytes = blob.getBytes(1, (int) blob.length());
+		return (Quiz) Serializer.deserialize(bytes);
 	}
 	
+	// Returns a list of all the questions
 	public List<Question> getQuestions() {
 		return questions;
 	}
 	
-	public String getName() {
-		return quizName;
+	// Returns total number of questions
+	public int getNumQuestions() {
+		return questions.size();
 	}
 	
-	public int getId() {
-		return id;
-	}
-	
-	public String checkQuiz() {
+	// Returns total number of correct questions
+	public int getNumCorrect() {
 		int correct = 0;
-		int total = 0;
 		
 		for (Question q: questions) {
-			total++;
-			
 			if (q.isCorrect())
 				correct++;
 		}
 		
-		return "Correct: " + correct + " | Total Questions: " + total; 
+		return correct;
+	}
+	
+	// Adds a question to the quiz
+	public void addQuestion(Question question) {
+		questions.add(question);
 	}
 }

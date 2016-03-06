@@ -11,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class LoginServlet
@@ -31,35 +32,28 @@ public class LoginServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		request.getSession().setAttribute("message", "Please Login");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("Login.jsp");
+		dispatcher.forward(request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		AccountManager accMan = (AccountManager) this.getServletContext().getAttribute("Account Manager");
-		String name = request.getParameter("Name");
-		request.getSession().setAttribute("Username", name);
-		String password = request.getParameter("Password");
-		request.getSession().setAttribute("Password", password);
-		if(!accMan.accountExists(name) || !accMan.passwordMatchesAccount(name, password) ) {
-			PrintWriter out = response.getWriter();
-			out.println("<h1>Please Try Again</h1>");
-			out.println("<p>Either your user name or password is incorrect. Please try again.</p>");
-			out.println("<form action=\"LoginServlet\" method=\"post\">");
-			out.println("User Name: <input type=\"text\" name=\"Name\"><br>");
-			out.println("Password: <input type=\"text\" name=\"Password\"><br>");
-			out.println("<input type=\"submit\" value=\"Login\">");
-			out.println("</form>");
-			out.println("<a href=\"CreateNew.html\">Create New Account</a>");
-		} else if(accMan.accountExists(name) && accMan.passwordMatchesAccount(name, password)) {
-			QuizManager quizMan = (QuizManager) this.getServletContext().getAttribute("Quiz Manager");
-			List<Quiz> rankings = quizMan.getPopularQuizzes();
-			request.getServletContext().setAttribute("QuizRankings", rankings);
-			
-			RequestDispatcher dispatcher = request.getRequestDispatcher("HomePage.jsp");
+		UserManager um = (UserManager) this.getServletContext().getAttribute("um");
+
+		String username = request.getParameter("username");
+		String password = request.getParameter("password");
+		
+		if(um.canLogin(username, password) ) {
+			HttpSession session = request.getSession();
+	        session.setAttribute("curUser", um.getUserByName(username));
+			RequestDispatcher dispatcher = request.getRequestDispatcher("HomePageServlet");
+			dispatcher.forward(request, response);
+		} else {
+			request.getSession().setAttribute("message", "Username/Password Incorrect");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("Login.jsp");
 			dispatcher.forward(request, response);
 		}
 	}

@@ -8,141 +8,120 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>HomePage</title>
+<title>Home Page</title>
 </head>
 <body>
 
-<%@include file="NavBar.jsp" %>
+<%@ include file="NavBar.jsp" %>
 
-<h1>Welcome <%=request.getSession().getAttribute("Username")%></h1>
-<section id=Messages>
+<%
+	if (curUser == null) {
+		request.getSession().setAttribute("message", "To See Home Page, Please Login");
+		response.sendRedirect("Login.jsp"); 
+	} else {
+		out.println("<h1>Welcome " + curUser.name + "</h1>");
+	}
+%>
+
+<section id="announcements">
+	<h3>Announcements</h3>
 	<%
-		if(request.getServletContext().getAttribute("MessageList") == null) {
-			ArrayList<Message> messageList = new ArrayList<Message>();
-			request.getServletContext().setAttribute("MessageList", messageList);
-			out.println("<p>No Current Messages!");
+		if (request.getServletContext().getAttribute("announcements") == null) {
+			out.println("<p>No Announcements</p>");
 		} else {
-			ArrayList<Message> messageList = (ArrayList<Message>)request.getServletContext().getAttribute("MessageList");
-			out.println("<p>You Have " + messageList.size() + " New Messages</p>");
-			//Extra Info
+			ArrayList<String> announcements = (ArrayList<String>) request.getServletContext().getAttribute("announcements");
+			out.println("<p>" + announcements.size() + " Announcements:</p>");
+			// Extra Info
+		}
+	%>
+	<hr/>
+</section>
+
+<section id="popular-quizzes">
+	<h3>Popular Quizzes</h3>
+	<%
+		if (request.getServletContext().getAttribute("popularQuizzes") == null) {
+			out.println("<p>No Popular Quizzes</p>");
+		} else {
+			ArrayList<Quiz> popularQuizzes = (ArrayList<Quiz>) request.getServletContext().getAttribute("popularQuizzes");
+			out.println("<p>" + popularQuizzes.size() + " Popular Quizzes:</p>");
+			out.println("<ul>");
+			for (Quiz q: popularQuizzes)	
+				out.println("<li><a href=\"QuizWelcome.jsp?id=" + q.id + "\">" + q.name + "</a></li>");
+			out.println("</ul>");
+		}
+	%>
+	<hr/>
+</section>
+
+<section id="recently-created-quizzes">
+	<h3>Recently Created Quizzes</h3>
+	<%
+		if (request.getServletContext().getAttribute("recentlyCreatedQuizzes") == null) {
+			out.println("<p>No Recently Created Quizzes</p>");
+		} else {
+			ArrayList<String> recentlyCreatedQuizzes = (ArrayList<String>) request.getServletContext().getAttribute("recentlyCreatedQuizzes");
+			out.println("<p>" + recentlyCreatedQuizzes.size() + " Recenlty Created Quizzes:</p>");
+			// Extra Info
+		}
+	%>
+	<hr/>
+</section>
+
+<section id="your-recently-created-quizzes">
+	<h3>Your Recently Created Quizzes</h3>
+	<%
+		if (request.getServletContext().getAttribute("yourRecentlyCreatedQuizzes") == null) {
+			out.println("<p>No Recently Created Quizzes By You</p>");
+		} else {
+			ArrayList<String> yourRecentlyCreatedQuizzes = (ArrayList<String>) request.getServletContext().getAttribute("yourRecentlyCreatedQuizzes");
+			out.println("<p>" + yourRecentlyCreatedQuizzes.size() + " Recenlty Created Quizzes By You:</p>");
+			// Extra Info
+		}
+	%>
+	<hr/>
+</section>
+
+<section id="achievements">
+	<h3>Achievements</h3>
+	<%
+		if (request.getServletContext().getAttribute("achievements") == null) {
+			out.println("<p>No Achievements</p>");
+		} else {
+			ArrayList<String> achievements = (ArrayList<String>) request.getServletContext().getAttribute("achievements");
+			out.println("<p>" + achievements.size() + " Achievements:</p>");
+			// Extra Info
+		}
+	%>
+	<hr/>
+</section>
+
+<section id="messages">
+	<h3>Messages</h3>
+	<%
+		if (request.getServletContext().getAttribute("messages") == null) {
+			out.println("<p>No Messages</p>");
+		} else {
+			ArrayList<String> messages = (ArrayList<String>) request.getServletContext().getAttribute("messages");
+			out.println("<p>" + messages.size() + " Messages:</p>");
+			// Extra Info
+		}
+	%>
+	<hr/>
+</section>
+
+<section id="friend-activity">
+	<h3>Friend Activity</h3>
+	<%
+		if (request.getServletContext().getAttribute("friendActivity") == null) {
+			out.println("<p>No Friend Activity</p>");
+		} else {
+			ArrayList<String> friendActivity = (ArrayList<String>) request.getServletContext().getAttribute("friendActivity");
+			out.println("<p>" + friendActivity.size() + " Messages:</p>");
+			// Extra Info
 		}
 	%>
 </section>
-<section id=Achievements>
-	<%
-		if(request.getServletContext().getAttribute("Achievements") == null) {
-			ArrayList<String> achievements = new ArrayList<String>();
-			request.getServletContext().setAttribute("Achievements", achievements);
-			out.println("<p>No Current Achievements :(</p>");
-		} else {
-			ArrayList<String> achievements = (ArrayList<String>)request.getServletContext().getAttribute("Achievements");
-			out.println("<p>Current Achievements</p>");
-			String name;
-			for(int i= 0; i < achievements.size(); i++) {
-				name = achievements.get(i);
-				out.println("<img src=\"" + request.getContextPath() + "/achievement-images/" + name + "\">");
-			}
-		}
-	%>
-</section>
-<section id=PopularQuizzes>
-	<p>Popular Quizzes</p>
-	<ul>
-	<%
-		List<Quiz> rankings = (ArrayList<Quiz>)request.getServletContext().getAttribute("QuizRankings");
-		if(rankings == null || rankings.isEmpty()) {
-			out.println("<li>No Current Popular Quizzes</li>");
-		} else {
-			for (Quiz q: rankings) {
-				out.println("<li><a href=\"QuizWelcome.jsp?id=" + q.getId() + "\">" + q.getName() + "</a></li>");
-			}
-		}
-	%>
-	</ul>
-</section>
-<section id=RecentlyCreatedQuizzes>
-	<p>Recently Created Quizzes</p>
-	<ul>
-	<%
-		if(rankings == null || rankings.isEmpty()) {
-			out.println("<li>No Recently Created Quizzes</li>");
-		} else {
-			for (Quiz q: rankings) {
-				out.println("<li><a href=\"QuizWelcome.jsp?id=" + q.getId() + "\">" + q.getName() + "</a></li>");
-			}
-		}
-	%>
-	</ul>
-</section>
-<section id=YourRecentlyTakenQuizzes>
-	<p>Your Recently Taken Quizzes</p>
-	<ul>
-	<%
-		if(rankings == null || rankings.isEmpty()) {
-			out.println("<li>You Have No Recently Taken Quizzes</li>");
-		} else {
-			for (Quiz q: rankings) {
-				out.println("<li><a href=\"QuizWelcome.jsp?id=" + q.getId() + "\">" + q.getName() + "</a></li>");
-			}
-		}
-	%>
-	</ul>
-</section>
-<section id=YourRecentlyCreatedQuizzes>
-	<p>Your Recently Created Quizzes</p>
-	<ul>
-		<%
-			if(rankings == null || rankings.isEmpty()) {
-				out.println("<li>You Have No Recently Created Quizzes</li>");
-			} else {
-				for (Quiz q: rankings) {
-					out.println("<li><a href=\"QuizWelcome.jsp?id=" + q.getId() + "\">" + q.getName() + "</a></li>");
-				}
-			}
-		%>
-	</ul>
-</section>
-<div style="overflow:auto" id=Announcements>
-	<p>Recent Announcements</p>
-	<ui>
-	<%
-		if(request.getServletContext().getAttribute("Announcements") == null) {
-			ArrayList<String> announcements = new ArrayList<String>();
-			request.getServletContext().setAttribute("Announcements", announcements);
-			out.println("No Recent Announcements");
-		} else {
-			ArrayList<String> announcements = (ArrayList<String>)request.getServletContext().getAttribute("Announcements");
-			String content;
-			for(int i= 0; i < announcements.size(); i++) {
-				content = announcements.get(i);
-				out.println("<li>" + content + "</li>");
-			}
-		}
-	%>
-	</ui>
-</div>
-<section id=Friends>
-	<p>Friends & Activities</p>
-	<ul>
-	<%
-		if(request.getServletContext().getAttribute("Users") == null) {
-			HashMap<String, User> users = new HashMap<String, User>();
-			out.println("<li>You Have No Friends Available :(</li>");
-		} else {
-			HashMap<String, User> users = (HashMap<String, User>)request.getServletContext().getAttribute("Users");
-			ArrayList<User> friends = users.get(request.getSession().getAttribute("Username")).friends;
-			if(friends.isEmpty()) {
-				out.println("<li>You Have No Friends Available :(</li>");
-			} else {
-				String name;
-				for(int i= 0; i < friends.size(); i++) {
-					name = friends.get(i).name;
-					out.println("<li><a href=\"UserPage.jsp?id=" + name + "\">" + name + "</a></li>");
-				}
-			}
-		}
-	%>
-	</ul>
-</section>
+
 </body>
 </html>
