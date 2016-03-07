@@ -3,8 +3,8 @@
     
 <%@ page import="home.*, java.util.*" %>   
 <% 
-AccountManager accMan = (AccountManager) request.getServletContext().getAttribute("Account Manager");
-HashMap<String, User> userMap = accMan.accounts;
+UserManager usrMan = (UserManager) request.getServletContext().getAttribute("um");
+HashMap<String, User> userMap = usrMan.getHash();
 String name = request.getParameter("id");
 User usr = userMap.get(name);
 User acctUser = (User) request.getSession().getAttribute("curUser");

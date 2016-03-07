@@ -114,7 +114,12 @@
 	<h3>Friend Activity</h3>
 	<%
 		User acctUser = (User) request.getSession().getAttribute("curUser");
-		if (acctUser.friends.isEmpty()) {
+		if (acctUser == null) {
+			System.out.println("acctUser is Null");
+		}
+		else if (acctUser.friends == null) {
+			System.out.println("friends is null"); 
+		} else if (acctUser.friends.isEmpty()) {
 			out.println("<li>You Have No Friends Available :(</li>");
 		} else {
 			String name;

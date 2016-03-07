@@ -26,7 +26,6 @@ public class User implements java.io.Serializable {
 		friends = new ArrayList<User>();
 		this.name = name;
 		this.password = PasswordHash.hashPassword(password);
-		System.out.println(this.password);
 	}
 	
 	public static User blobToUser(Blob blob) 
