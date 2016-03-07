@@ -7,7 +7,7 @@ AccountManager accMan = (AccountManager) request.getServletContext().getAttribut
 HashMap<String, User> userMap = accMan.accounts;
 String name = request.getParameter("id");
 User usr = userMap.get(name);
-User acctUser = (User) request.getSession().getAttribute("User");
+User acctUser = (User) request.getSession().getAttribute("curUser");
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>

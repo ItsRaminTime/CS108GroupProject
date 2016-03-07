@@ -1,6 +1,7 @@
 # Added for CS108 Project
 *.jsdtscope  
 *.class*
+build/classes/.gitignore
 
 # The following are the what came with Github's default Java .gitignore
 

@@ -10,14 +10,14 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <% Quiz quiz = (Quiz) request.getServletContext().getAttribute("quiz"); %>
-<title><%= quiz.getName() %> Results</title>
+<title><%= quiz.name %> Results</title>
 </head>
 <body>
 <%@include file="NavBar.jsp" %>
 
-<h1><%= quiz.getName() %> Results</h1>
+<h1><%= quiz.name %> Results</h1>
 
-<h3>Your Score: <%= quiz.checkQuiz() %><h3>
+<h3>Your Score: <%= quiz.getNumCorrect() %> / <%= quiz.getNumQuestions() %><h3>
 <% 
 int i = 1;
 for (Question q: quiz.getQuestions()) {
@@ -25,6 +25,7 @@ for (Question q: quiz.getQuestions()) {
 	out.println("<p>Question: " + q.getDisplayStr() + "</p>");
 	out.println("<p>Correct Answer: " + q.getCorrectAnswer() + "</p>");
 	out.println("<p>Your Answer: " + q.getGivenAnswer() + "</p>");
+	
 	if (q.isCorrect())
 		out.println("<p>CORRECT</p>");
 	else
