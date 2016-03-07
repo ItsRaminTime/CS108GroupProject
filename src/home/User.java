@@ -33,4 +33,9 @@ public class User implements java.io.Serializable {
 		byte[] uBytes = blob.getBytes(1, (int) blob.length());
 		return (User) Serializer.deserialize(uBytes);
 	}
+	
+	public boolean equals(User usr) {
+		return this.name.equals(usr.name);
+	}
+	
 }
