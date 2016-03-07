@@ -11,6 +11,8 @@
 			out.println("<li><a class=\"navbar-link\" href=\"CreateUserServlet\">Create Account</a></li>");
 		} else {
 			out.println("<li><a class=\"navbar-link\" href=\"LogoutServlet\">Logout</a></li>");
+			out.println("<li><a class=\"navbar-link\" href=\"SetUpQuiz.jsp\">Create New Quiz</a></li>");
+			out.println("<li><a class=\"navbar-link\" href=\"UserList.jsp\">Find Friends</a></li>");
 		}
 	%>
 	

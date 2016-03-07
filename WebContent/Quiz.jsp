@@ -13,7 +13,7 @@
 <title><%= quiz.name %></title>
 
 </head>
-<body>
+<body background="<%=request.getContextPath()%>/background-images/background.jpg">
 
 <%@include file="NavBar.jsp" %>
 
@@ -26,7 +26,14 @@
 		int j = i+1;
 		out.println("<h3>Question " + j + ")</h3>");
 		out.println("<p>" + q.getDisplayStr() + "</p>");
-		out.println("<input type=\"text\" name=\"answer" + i + "\"/>");
+		if(q.getType().equals("Response")) {
+			out.println("<input type=\"text\" name=\"answer" + i + "\"/>");
+		} else if(q.getType().equals("Multiple")) {
+			out.println("<input type=\"radio\" name=\"answer" + i + "\" value=\"1\">" + q.getOption1() + "/>");
+			out.println("<input type=\"radio\" name=\"answer" + i + "\" value=\"2\">" + q.getOption2() + "/>");
+			out.println("<input type=\"radio\" name=\"answer" + i + "\" value=\"3\">" + q.getOption3() + "/>");
+			out.println("<input type=\"radio\" name=\"answer" + i + "\" value=\"4\">" + q.getOption4() + "/>");
+		}
 		i++;
 	}
 %>

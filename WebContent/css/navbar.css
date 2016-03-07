@@ -1,3 +1,8 @@
+@font-face {
+  font-family: Poiret One;
+  src: url(PoiretOne-Regular.ttf) format(opentype);
+}
+
 #navbar {
     padding: 0;
 }
@@ -23,3 +28,13 @@
 	color: black;
 	border: 1px solid white;
 }
+
+body{
+	font-family: 'Poiret One';
+	color: white;
+}
+
+a{
+	color: white;
+}
+

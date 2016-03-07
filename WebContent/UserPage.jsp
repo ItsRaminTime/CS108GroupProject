@@ -13,7 +13,7 @@ User usr = users.get(id);
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title><%= usr.name %></title>
 </head>
-<body>
+<body background="<%=request.getContextPath()%>/background-images/background.jpg">
 
 
 <p> <%= usr.name %> </p>

@@ -19,7 +19,7 @@
 		request.getSession().setAttribute("message", "To See Home Page, Please Login");
 		response.sendRedirect("Login.jsp"); 
 	} else {
-		out.println("<h1>Welcome " + curUser.name + "</h1>");
+		out.println("<h1>Welcome " + curUser.name + "!</h1>");
 	}
 %>
 

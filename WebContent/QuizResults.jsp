@@ -12,7 +12,7 @@
 <% Quiz quiz = (Quiz) request.getServletContext().getAttribute("quiz"); %>
 <title><%= quiz.name %> Results</title>
 </head>
-<body>
+<body background="<%=request.getContextPath()%>/background-images/background.jpg">
 <%@include file="NavBar.jsp" %>
 
 <h1><%= quiz.name %> Results</h1>

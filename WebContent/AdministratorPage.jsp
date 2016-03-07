@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Admin Page</title>
 </head>
-<body>
+<body background="<%=request.getContextPath()%>/background-images/background.jpg">
 <h1>Administrator Page</h1>
 </body>
 </html>
