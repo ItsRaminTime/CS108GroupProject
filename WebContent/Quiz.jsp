@@ -10,16 +10,16 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <% Quiz quiz = (Quiz) request.getServletContext().getAttribute("quiz"); %>
+<title><%= quiz.name %></title>
 
-<title><%= quiz.getName() %></title>
 </head>
 <body>
 
 <%@include file="NavBar.jsp" %>
 
-<h1><%= quiz.getName() %></h1>
+<h1><%= quiz.name %></h1>
 
-<form action="QuizServlet?id=<%= quiz.getId() %>" method="post">
+<form action="QuizServlet?id=<%= quiz.id %>" method="post">
 <% 
 	int i = 0;
 	for (Question q: quiz.getQuestions()) {

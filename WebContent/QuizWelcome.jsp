@@ -11,14 +11,17 @@
 <title>Quiz Welcome Page</title>
 </head>
 <body>
+
 <%@include file="NavBar.jsp" %>
 	
 <%
-	Quiz quiz = ((QuizManager)request.getServletContext().getAttribute("Quiz Manager")).getQuizById(Integer.parseInt(request.getParameter("id")));
+	QuizManager qm = (QuizManager) request.getServletContext().getAttribute("qm");
+	Quiz quiz = qm.getQuizById(Integer.parseInt(request.getParameter("id")));
 %>
 
-<h1>Welcome to <%=quiz.getName()%></h1>
-<p>This quiz has <%=quiz.getQuestions().size()%></p>
+<h1>Welcome to <%= quiz.name %></h1>
+<p>This quiz has <%= quiz.getNumQuestions() %> questions</p>
+<a href="QuizServlet?id=<%= request.getParameter("id") %>">Take Quiz</a>
 
 </body>
 </html>

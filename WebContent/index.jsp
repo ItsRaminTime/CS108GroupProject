@@ -1,1 +1,1 @@
-<%@include file="HomePage.jsp" %>
+<% response.sendRedirect("HomePageServlet"); %>
