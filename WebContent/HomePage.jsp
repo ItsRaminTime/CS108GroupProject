@@ -125,24 +125,36 @@
 	<p>Friends & Activities</p>
 	<ul>
 	<%
-		if(request.getServletContext().getAttribute("Users") == null) {
+		/*if(request.getServletContext().getAttribute("Users") == null) {
 			HashMap<String, User> users = new HashMap<String, User>();
 			out.println("<li>You Have No Friends Available :(</li>");
 		} else {
 			HashMap<String, User> users = (HashMap<String, User>)request.getServletContext().getAttribute("Users");
 			ArrayList<User> friends = users.get(request.getSession().getAttribute("Username")).friends;
-			if(friends.isEmpty()) {
+			User acctUser = (User) request.getSession().getAttribute("User");
+			if(acctUser.friends.isEmpty()) {
 				out.println("<li>You Have No Friends Available :(</li>");
 			} else {
 				String name;
-				for(int i= 0; i < friends.size(); i++) {
-					name = friends.get(i).name;
+				for(int i= 0; i < acctUser.friends.size(); i++) {
+					name = acctUser.friends.get(i).name;
 					out.println("<li><a href=\"UserPage.jsp?id=" + name + "\">" + name + "</a></li>");
 				}
+			}
+		}*/
+		User acctUser = (User) request.getSession().getAttribute("User");
+		if (acctUser.friends.isEmpty()) {
+			out.println("<li>You Have No Friends Available :(</li>");
+		} else {
+			String name;
+			for(int i= 0; i < acctUser.friends.size(); i++) {
+				name = acctUser.friends.get(i).name;
+				out.println("<li><a href=\"UserPage.jsp?id=" + name + "\">" + name + "</a></li>");
 			}
 		}
 	%>
 	</ul>
 </section>
+
 </body>
 </html>

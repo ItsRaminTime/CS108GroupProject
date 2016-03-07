@@ -12,6 +12,8 @@ public class User {
 	public ArrayList<User> friends;
 	public ArrayList<String> quizzesCreated;
 	
+	public ArrayList<Message> messageList;
+	
 	public int numQuizzesTaken;
 	public int numQuizzesCreated;
 	

@@ -43,12 +43,17 @@ public class CreateAccountServlet extends HttpServlet {
 		request.getSession().setAttribute("Username", name);
 		String password = request.getParameter("Password");
 		request.getSession().setAttribute("Password", password);
+		String hashedPassword = PasswordHash.hashPassword(password);
+		
 		if(!accMan.accountExists(name)) {
-			accMan.createNewAccount(name, password);
+			accMan.createNewAccount(name, hashedPassword);
 			
 			QuizManager quizMan = (QuizManager) this.getServletContext().getAttribute("Quiz Manager");
 			List<Quiz> rankings = quizMan.getPopularQuizzes();
 			request.getServletContext().setAttribute("QuizRankings", rankings);
+			//NF added User object to session
+			User user = new User(name, hashedPassword);
+			request.getSession().setAttribute("User", user);
 			
 			RequestDispatcher dispatcher = request.getRequestDispatcher("HomePage.jsp");
 			dispatcher.forward(request, response);

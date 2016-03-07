@@ -6,6 +6,7 @@
 	<li><a class="quiz-link" href="CreateNewQuiz.jsp">Create New Quiz</a></li> 
 	<li><a class="user-link" href="Login.jsp">Login</a></li>
 	<li><a class="user-link" href="CreateNew.jsp">Create New Account</a></li>
+	<li><a class="user-link" href="UserList.jsp">Find Users</a></li>
 </ul>
 
 <hr/>

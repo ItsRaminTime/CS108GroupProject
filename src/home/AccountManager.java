@@ -4,40 +4,32 @@ import java.util.*;
 
 public class AccountManager {
 	
-	private ArrayList<User> accounts;
+	/*
+	 * accounts is the list of all the users in the system.
+	 * It gets loaded into the servlet context when the website is launched.
+	 */
+	//public ArrayList<User> accounts;
+	public HashMap<String,User> accounts;
 	
 	public AccountManager() {
-		accounts = new ArrayList<User>();
+		accounts = new HashMap<String, User>();
 		createNewAccount("Patrick", "1234");
 		createNewAccount("Molly", "FloPup");
 	}
 	
 	public boolean accountExists(String name) {
-		for(int i = 0; i < accounts.size(); i++) {
-			if (accounts.get(i).name.equals(name)) {
-				return true;
-			}
-		}
-		return false;
+		return accounts.containsKey(name);
 	}
 	
 	public boolean passwordMatchesAccount(String name, String password) {
-		for(int i = 0; i < accounts.size(); i++) {
-			if (accounts.get(i).name.equals(name)) {
-				return accounts.get(i).password.equals(password); 
-			}
-		}
-		return false;
+		return accounts.get(name).password.equals(password);
+		
 	}
 	
 	public boolean createNewAccount(String name, String password) {
-		for(int i = 0; i < accounts.size(); i++) {
-			if(accounts.get(i).name.equals(name)) {
-				return false;
-			}
-		}
+		if (accounts.containsKey(name)) return false;
 		User newAccount = new User(name, password);
-		accounts.add(newAccount);
+		accounts.put(name, newAccount);
 		return true;
 	}
 }

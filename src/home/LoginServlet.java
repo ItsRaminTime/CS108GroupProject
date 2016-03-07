@@ -12,6 +12,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 /**
  * Servlet implementation class LoginServlet
  */
@@ -44,7 +47,9 @@ public class LoginServlet extends HttpServlet {
 		request.getSession().setAttribute("Username", name);
 		String password = request.getParameter("Password");
 		request.getSession().setAttribute("Password", password);
-		if(!accMan.accountExists(name) || !accMan.passwordMatchesAccount(name, password) ) {
+		String hashedPassword = PasswordHash.hashPassword(password);
+		
+		if(!accMan.accountExists(name) || !accMan.passwordMatchesAccount(name, hashedPassword) ) {
 			PrintWriter out = response.getWriter();
 			out.println("<h1>Please Try Again</h1>");
 			out.println("<p>Either your user name or password is incorrect. Please try again.</p>");
@@ -54,11 +59,13 @@ public class LoginServlet extends HttpServlet {
 			out.println("<input type=\"submit\" value=\"Login\">");
 			out.println("</form>");
 			out.println("<a href=\"CreateNew.html\">Create New Account</a>");
-		} else if(accMan.accountExists(name) && accMan.passwordMatchesAccount(name, password)) {
+		} else if(accMan.accountExists(name) && accMan.passwordMatchesAccount(name, hashedPassword)) {
 			QuizManager quizMan = (QuizManager) this.getServletContext().getAttribute("Quiz Manager");
 			List<Quiz> rankings = quizMan.getPopularQuizzes();
 			request.getServletContext().setAttribute("QuizRankings", rankings);
-			
+			//NF added User object to session
+			User user = new User(name, hashedPassword);
+			request.getSession().setAttribute("User", user);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("HomePage.jsp");
 			dispatcher.forward(request, response);
 		}
