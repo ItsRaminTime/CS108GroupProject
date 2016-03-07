@@ -34,7 +34,7 @@ for (int i=0; i<usr.friends.size(); i++) {
 	User curUsr = usr.friends.get(i);
 	String line = "<li>";
     line += "<a href=\"friend.jsp?id=";
-    line += (curUsr.id + "\">" + curUsr.name + "</a></li>");
+    line += (curUsr.name + "\">" + curUsr.name + "</a></li>");
     out.println(line);
 }
 %>

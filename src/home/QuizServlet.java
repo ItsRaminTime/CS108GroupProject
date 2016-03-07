@@ -29,11 +29,11 @@ public class QuizServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		QuizManager quizMan = (QuizManager) this.getServletContext().getAttribute("Quiz Manager");
-			
-		Quiz quiz = quizMan.getQuizById(Integer.parseInt(request.getParameter("id")));
+		QuizManager qm = (QuizManager) this.getServletContext().getAttribute("qm");
+		Quiz quiz = qm.getQuizById(Integer.parseInt(request.getParameter("id")));		
+		
 		if (quiz == null) {
-			request.getServletContext().setAttribute("QuizRankings", quizMan.getPopularQuizzes());
+			request.getServletContext().setAttribute("QuizRankings", qm.getPopularQuizzes());
 			RequestDispatcher dispatcher = request.getRequestDispatcher("HomePage.jsp");
 			dispatcher.forward(request, response);
 		} else {
@@ -47,11 +47,11 @@ public class QuizServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		QuizManager quizMan = (QuizManager) this.getServletContext().getAttribute("Quiz Manager");
+		QuizManager qm = (QuizManager) this.getServletContext().getAttribute("qm");
+		Quiz quiz = qm.getQuizById(Integer.parseInt(request.getParameter("id")));
 		
-		Quiz quiz = quizMan.getQuizById(Integer.parseInt(request.getParameter("id")));
 		if (quiz == null) {
-			request.getServletContext().setAttribute("QuizRankings", quizMan.getPopularQuizzes());
+			request.getServletContext().setAttribute("QuizRankings", qm.getPopularQuizzes());
 			RequestDispatcher dispatcher = request.getRequestDispatcher("HomePage.jsp");
 			dispatcher.forward(request, response);
 		} else {
