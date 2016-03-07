@@ -13,6 +13,7 @@ public class Quiz implements java.io.Serializable {
 	public String name;
 	private List<Question> questions;	
 	private static int numQuizzes = 0;
+	public int nVisits = 0;
 	
 	// Initializes quiz
 	public Quiz(String name) {
