@@ -23,6 +23,7 @@ public class UserManager {
 				Blob userBlob = rs.getBlob("data");
 				User user = User.blobToUser(userBlob);
 				users.put(user.name, user);
+				System.out.println(user.name);
 			}
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();

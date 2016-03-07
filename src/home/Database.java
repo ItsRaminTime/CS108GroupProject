@@ -16,8 +16,8 @@ public class Database {
 
 	Connection con;
 	Statement stmt;
+	
 	public Database() {
-
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			con = DriverManager.getConnection("jdbc:mysql://" + MYSQL_DATABASE_SERVER, MYSQL_USERNAME, MYSQL_PASSWORD);
@@ -64,6 +64,30 @@ public class Database {
 	    PreparedStatement stmt = con.prepareStatement(sql);
 	    stmt.setString(1, user.name);
 	    stmt.setBinaryStream(2, blob.getBinaryStream(), (int) blob.length());
+	    stmt.execute();
+	}
+	
+	// Updates a single quiz
+	public void updateQuiz(Quiz quiz) 
+			throws SerialException, SQLException, IOException {
+		byte[] bytes = Serializer.serialize(quiz);
+		Blob blob = new SerialBlob(bytes);		
+		String sql = "UPDATE quizzes SET data = (?) WHERE id = (?)";
+	    PreparedStatement stmt = con.prepareStatement(sql);
+	    stmt.setBinaryStream(1, blob.getBinaryStream(), (int) blob.length());
+	    stmt.setLong(2, quiz.id);
+	    stmt.execute();
+	}
+	
+	// Updates a single user
+	public void updateUser(User user) 
+			throws SerialException, SQLException, IOException {
+		byte[] bytes = Serializer.serialize(user);
+		Blob blob = new SerialBlob(bytes);		
+		String sql = "UPDATE users SET data = (?) WHERE name = (?)";
+	    PreparedStatement stmt = con.prepareStatement(sql);
+	    stmt.setBinaryStream(1, blob.getBinaryStream(), (int) blob.length());
+	    stmt.setString(2, user.name);
 	    stmt.execute();
 	}
 	
