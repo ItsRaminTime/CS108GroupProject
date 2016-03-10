@@ -89,6 +89,8 @@ public class Database {
 	    stmt.setBinaryStream(1, blob.getBinaryStream(), (int) blob.length());
 	    stmt.setString(2, user.name);
 	    stmt.execute();
+	    //PreparedStatement stmt2 = con.prepareStatement("TRUNCATE users");
+	    //stmt2.execute();
 	}
 	
 	// Call when context is destroyed

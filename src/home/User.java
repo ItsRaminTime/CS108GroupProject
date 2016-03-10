@@ -13,6 +13,8 @@ public class User implements java.io.Serializable {
 	public ArrayList<String> quizzesTaken;
 	public ArrayList<User> friends;
 	public ArrayList<String> quizzesCreated;
+	public ArrayList<User> sentFriendRequests;
+	public ArrayList<User> receivedFriendRequests;
 	
 	public ArrayList<Message> messageList;
 	
@@ -24,6 +26,9 @@ public class User implements java.io.Serializable {
 	public User(String name, String password) {
 		quizzesTaken = new ArrayList<String>();
 		friends = new ArrayList<User>();
+		messageList = new ArrayList<Message>();
+		sentFriendRequests = new ArrayList<User>();
+		receivedFriendRequests = new ArrayList<User>();
 		this.name = name;
 		this.password = PasswordHash.hashPassword(password);
 	}
