@@ -1,8 +1,6 @@
 package home;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -41,20 +39,25 @@ public class CreateUserServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		UserManager um = (UserManager) this.getServletContext().getAttribute("um");
+		RequestDispatcher dispatcher;
 		
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		
-		if(um.canCreate(username, password)) {
+		// Only alphanumeric usernames and passwords
+		if (!username.matches("[A-Za-z0-9]+") || !password.matches("[A-Za-z0-9]+")) {
+			request.getSession().setAttribute("message", "Usernames and Passwords Must Be Alphanumeric");
+			dispatcher = request.getRequestDispatcher("CreateUser.jsp");
+		} if (um.canCreate(username, password)) {
 			um.createUser(username, password);
 			HttpSession session = request.getSession();
 	        session.setAttribute("curUser", um.getUserByName(username));
-			RequestDispatcher dispatcher = request.getRequestDispatcher("HomePageServlet");
-			dispatcher.forward(request, response);
+	        dispatcher = request.getRequestDispatcher("HomePage.jsp");
 		} else {
-			request.getSession().setAttribute("message", "Creation Failed");
-			RequestDispatcher dispatcher = request.getRequestDispatcher("CreateUser.jsp");
-			dispatcher.forward(request, response);
+			request.getSession().setAttribute("message", "Creation Failed");		
+			dispatcher = request.getRequestDispatcher("CreateUser.jsp");
 		}
+		
+		dispatcher.forward(request, response);
 	}
 }

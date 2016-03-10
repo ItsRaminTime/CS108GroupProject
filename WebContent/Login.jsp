@@ -1,23 +1,31 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-
 <html>
+
+<%
+	String message = (String) request.getSession().getAttribute("message");
+	if (message == null) message = "Create Account";		
+%>
+
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Login</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+	<title>Login</title>
 </head>
+
 <body>
-
-<%@include file="NavBar.jsp" %>
-
-<h1><%= request.getSession().getAttribute("message") %></h1>
-<p>Please log in.</p>
-<form action="LoginServlet" method="post">
-	User Name: <input type="text" name="username"><br>
-	Password: <input type="password" name="password"><br>
-	<input type="submit" value="Login">
-</form>
-
+	<%@ include file="NavBar.jsp" %>
+	
+	<h1><%= message %></h1>
+	<hr/>
+	
+	<h3>Please log in. Usernames and passwords are case sensitive.</h3>
+	
+	<form action="LoginServlet" method="post">
+		<p>User Name: <input type="text" name="username"><br></p>
+		<p>Password: <input type="password" name="password"><br></p>
+		<input type="submit" value="Login">
+	</form>
 </body>
+
 </html>

@@ -4,14 +4,18 @@ import java.io.IOException;
 import java.sql.Blob;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.sql.rowset.serial.SerialException;
 
 public class UserManager {
 	
-	private Map<String, User> users;
+	public Map<String, User> users;
 	Database db;
 	
 	public UserManager(Database db) {
@@ -23,7 +27,7 @@ public class UserManager {
 				Blob userBlob = rs.getBlob("data");
 				User user = User.blobToUser(userBlob);
 				users.put(user.name, user);
-				System.out.println(user.name);
+				System.out.println(user.name +  " | " + user.password);
 			}
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -68,5 +72,52 @@ public class UserManager {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	public void updateUserInDb(User user) {
+		try {
+			db.updateUser(user);
+		} catch (SQLException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public List<QuizCreated> getRecentlyCreatedQuizzes(User curUser) {
+		if (curUser == null)
+			return null;
+		
+		if (curUser.numQuizzesCreated == 0)
+			return null;
+		
+		List<QuizCreated> recentlyCreatedQuizzes = new ArrayList<QuizCreated>(curUser.quizzesCreated);
+		
+		Collections.sort(recentlyCreatedQuizzes, new Comparator<QuizCreated>() {
+	        @Override
+	        public int compare(QuizCreated qc1, QuizCreated qc2) {;
+	        	return qc2.date.compareTo(qc1.date);
+	        }
+	    });
+		
+		return recentlyCreatedQuizzes;
+	}
+	
+	public List<QuizResult> getRecentlyTakenQuizzes(User curUser) {
+		if (curUser == null)
+			return null;
+		
+		if (curUser.numQuizzesTaken == 0)
+			return null;
+		
+		List<QuizResult> recentlyTakenQuizzes = new ArrayList<QuizResult>(curUser.quizzesTaken);
+		
+		Collections.sort(recentlyTakenQuizzes, new Comparator<QuizResult>() {
+	        @Override
+	        public int compare(QuizResult q1, QuizResult q2) {;
+	        	return q2.getDate().compareTo(q1.getDate());
+	        }
+	    });
+		
+		return recentlyTakenQuizzes;
 	}
 }

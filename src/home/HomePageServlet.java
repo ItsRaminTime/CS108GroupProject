@@ -30,12 +30,15 @@ public class HomePageServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Database db = (Database) this.getServletContext().getAttribute("db");
 		UserManager um = (UserManager) this.getServletContext().getAttribute("um");
 		QuizManager qm = (QuizManager) this.getServletContext().getAttribute("qm");
+		HttpSession session = request.getSession();
+        User curUser = (User) session.getAttribute("curUser");
 		
-		List<Quiz> popularQuizzes = qm.getPopularQuizzes();
-		request.getServletContext().setAttribute("popularQuizzes", popularQuizzes);
+		request.getServletContext().setAttribute("popularQuizzes", qm.getPopularQuizzes());
+		request.getServletContext().setAttribute("recentlyCreatedQuizzes", qm.getRecentlyCreatedQuizzes());
+		request.getServletContext().setAttribute("yourRecentlyCreatedQuizzes", um.getRecentlyCreatedQuizzes(curUser));
+		request.getServletContext().setAttribute("yourRecentlyTakenQuizzes", um.getRecentlyTakenQuizzes(curUser));
 		RequestDispatcher dispatcher = request.getRequestDispatcher("HomePage.jsp");
 		dispatcher.forward(request, response);
 	}

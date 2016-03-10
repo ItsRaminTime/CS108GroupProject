@@ -1,6 +1,6 @@
 package home;
 
-public class Message {
+public class Message implements java.io.Serializable {
 	
 	String sender;
 	String time;

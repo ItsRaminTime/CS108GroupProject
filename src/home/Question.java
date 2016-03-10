@@ -1,5 +1,6 @@
 package home;
 
+@SuppressWarnings("serial")
 public class Question implements java.io.Serializable {
 	protected boolean correct = false;
 	protected String displayStr = "";

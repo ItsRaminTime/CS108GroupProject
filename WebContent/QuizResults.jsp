@@ -1,37 +1,43 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-
-<%@ page import ="home.Quiz" %>
-<%@ page import ="home.Question" %>
-
 <html>
+
+<%@ page import="home.*" %>
+
+<% QuizResult qr = (QuizResult) request.getServletContext().getAttribute("quizResult"); %>
+
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
-<% Quiz quiz = (Quiz) request.getServletContext().getAttribute("quiz"); %>
-<title><%= quiz.name %> Results</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+	<title>Quiz Results</title>
 </head>
+
 <body>
-<%@include file="NavBar.jsp" %>
-
-<h1><%= quiz.name %> Results</h1>
-
-<h3>Your Score: <%= quiz.getNumCorrect() %> / <%= quiz.getNumQuestions() %><h3>
-<% 
-int i = 1;
-for (Question q: quiz.getQuestions()) {
-	out.println("<h3>Question " + i + ")</h3>");
-	out.println("<p>Question: " + q.getDisplayStr() + "</p>");
-	out.println("<p>Correct Answer: " + q.getCorrectAnswer() + "</p>");
-	out.println("<p>Your Answer: " + q.getGivenAnswer() + "</p>");
+	<%@include file="NavBar.jsp" %>
 	
-	if (q.isCorrect())
-		out.println("<p>CORRECT</p>");
-	else
-		out.println("<p>WRONG</p>");
-}
-%>
-
+	<h1><%= qr.getUsername() %>'s Score: <%= qr.getScore() %> / <%= qr.getTotal() %></h1>
+	<h3>Taken on: <%= qr.getDate() %></h3>
+	<hr/>
+	
+	<% 
+		int i = 1;
+		for (Question q: qr.getQuestions()) {
+			out.println("<h3>Question " + i + ")</h3>");
+			out.println("<p>Question: " + q.getDisplayStr() + "</p>");
+			out.println("<p>Correct Answer: " + q.getCorrectAnswer() + "</p>");
+			out.println("<p>Your Answer: " + q.getGivenAnswer() + "</p>");
+			i++;
+			
+			if (q.isCorrect())
+				out.println("<p>CORRECT</p>");
+			else
+				out.println("<p>WRONG</p>");
+			
+			out.println("<hr/>");
+		}
+	%>
+	
+	<a href="QuizServlet?id=<%= qr.getQuizId() %>">Take Quiz Again</a> | <a href="QuizWelcome.jsp?id=<%= qr.getQuizId() %>">Back to Quiz's Summary Page</a> 
 </body>
+
 </html>

@@ -2,39 +2,60 @@ package home;
 
 import java.util.*;
 
-public class QuizResult {
+@SuppressWarnings("serial")
+public class QuizResult implements java.io.Serializable {
 	
-	private Date date;
+	private int quizId;
+	private String quizName;
+	private String creatorName;
+	private String username;
 	private int score;
-	private int duration;
+	private int total;
+	private Date date;
+	private List<Question> questions;
 	
-	public QuizResult(Date date, int score, int duration) {
-		this.date = date;
-		this.score = score;
-		this.duration = duration;
+	public QuizResult(Quiz quiz, String username, List<Question> questions) {
+		this.quizId = quiz.id;
+		this.username = username;
+		this.questions = questions;
+		
+		quizName = quiz.name;
+		creatorName = quiz.creatorName;
+		score = quiz.getNumCorrect();
+		total = questions.size();
+		date = new Date();
 	}
 	
-	void setDate(Date date) {
-		this.date = date;
+	public int getQuizId() {
+		return quizId;
 	}
 	
-	Date getDate() {
-		return date;
+	public String getQuizName() {
+		return quizName;
 	}
 	
-	void setScore(int score) {
-		this.score = score;
+	public String getCreatorName() {
+		return creatorName;
 	}
 	
-	int getScore() {
+	
+	public String getUsername() {
+		return username;
+	}
+	
+	public int getScore() {
 		return score;
 	}
 	
-	void setDuration(int duration) {
-		this.duration = duration;
+	public int getTotal() {
+		return total;
 	}
 	
-	int getDuration() {
-		return duration;
+	public Date getDate() {
+		return date;
+	}
+
+	public List<Question> getQuestions() {
+		return new ArrayList<Question> (questions);
 	}
 }

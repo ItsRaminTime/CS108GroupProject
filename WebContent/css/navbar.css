@@ -18,8 +18,7 @@
 	border: 1px solid black;
 }
 
-#navbar .nabar-link:hover {
-    background-color: #99badd;
-	color: black;
-	border: 1px solid white;
+#navbar .navbar-link:hover {
+    background-color: black;
+	color: white;
 }
