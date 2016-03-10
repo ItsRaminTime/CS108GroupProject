@@ -15,9 +15,8 @@
 <p>Please enter proposed name and password.</p>
 <form action="CreateUserServlet" method="post">
 	User Name: <input type="text" name="username"><br>
-	Password: <input type="password" name="password"><br>
-	<input type="submit" value="Register">
+	Password : <input type="password" name="password"><br><br>
+	<input type="submit" value="Register"><br><br>
 </form>
-
 </body>
 </html>

@@ -33,6 +33,11 @@
 			out.println("<input type=\"radio\" name=\"answer" + i + "\" value=\"2\">" + q.getOption2() + "/>");
 			out.println("<input type=\"radio\" name=\"answer" + i + "\" value=\"3\">" + q.getOption3() + "/>");
 			out.println("<input type=\"radio\" name=\"answer" + i + "\" value=\"4\">" + q.getOption4() + "/>");
+		} else if(q.getType().equals("Checkbox")) {
+			out.println("<input type=\"checkbox\" name=\"answer" + i + "\" value=\"check1\">" + q.getOption1() + "/>");
+			out.println("<input type=\"checkbox\" name=\"answer" + i + "\" value=\"check2\">" + q.getOption2() + "/>");
+			out.println("<input type=\"checkbox\" name=\"answer" + i + "\" value=\"check3\">" + q.getOption3() + "/>");
+			out.println("<input type=\"checkbox\" name=\"answer" + i + "\" value=\"check4\">" + q.getOption4() + "/>");
 		}
 		i++;
 	}

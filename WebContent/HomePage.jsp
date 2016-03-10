@@ -48,7 +48,7 @@
 			out.println("<ul>");
 			for (Quiz q: popularQuizzes)	
 				out.println("<li><a href=\"QuizWelcome.jsp?id=" + q.id + "\">" + q.name + "</a></li>");
-			out.println("</ul>");
+				out.println("</ul>");
 		}
 	%>
 	<hr/>

@@ -10,6 +10,7 @@ public class User implements java.io.Serializable {
 	public String name;
 	public String password;
 	
+	public boolean isAdmin;
 	public ArrayList<String> quizzesTaken;
 	public ArrayList<User> friends;
 	public ArrayList<String> quizzesCreated;
@@ -24,6 +25,7 @@ public class User implements java.io.Serializable {
 		friends = new ArrayList<User>();
 		this.name = name;
 		this.password = password;
+		isAdmin = false;
 	}
 	
 	public static User blobToUser(Blob blob) 

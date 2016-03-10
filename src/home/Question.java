@@ -10,6 +10,10 @@ public class Question implements java.io.Serializable {
 	protected String option2 = "";
 	protected String option3 = "";
 	protected String option4 = "";
+	protected String correctAnswer2 = "";
+	protected String correctAnswer3 = "";
+	protected String correctAnswer4 = "";
+
 	
 	public boolean isCorrect() {
 		return correct;
@@ -21,6 +25,18 @@ public class Question implements java.io.Serializable {
 
 	public String getCorrectAnswer() {
 		return correctAnswer;
+	}
+	
+	public String getCorrectAnswer2() {
+		return correctAnswer2;
+	}
+	
+	public String getCorrectAnswer3() {
+		return correctAnswer3;
+	}
+	
+	public String getCorrectAnswer4() {
+		return correctAnswer4;
 	}
 	
 	public String getGivenAnswer() {

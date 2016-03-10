@@ -15,9 +15,8 @@
 <p>Please log in.</p>
 <form action="LoginServlet" method="post">
 	User Name: <input type="text" name="username"><br>
-	Password: <input type="password" name="password"><br>
-	<input type="submit" value="Login">
+	Password : <input type="password" name="password"><br><br>
+	<input type="submit" value="Login"><br><br>
 </form>
-
 </body>
 </html>

@@ -13,6 +13,9 @@
 			out.println("<li><a class=\"navbar-link\" href=\"LogoutServlet\">Logout</a></li>");
 			out.println("<li><a class=\"navbar-link\" href=\"SetUpQuiz.jsp\">Create New Quiz</a></li>");
 			out.println("<li><a class=\"navbar-link\" href=\"UserList.jsp\">Find Friends</a></li>");
+			if(curUser.isAdmin) {
+				out.println("<li><a class=\"navbar-link\" href=\"AdministratorPage.jsp\">Admin Page</a></li>");
+			}
 		}
 	%>
 	

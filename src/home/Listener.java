@@ -31,6 +31,7 @@ public class Listener implements HttpSessionListener, ServletContextListener  {
         context.setAttribute("db", db);
         context.setAttribute("um", new UserManager(db));
         context.setAttribute("qm", new QuizManager(db));
+        //context.setAttribute("announce", db.announcements);
     }
 
 	/**
