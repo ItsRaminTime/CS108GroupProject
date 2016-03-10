@@ -17,20 +17,37 @@
 
 <body>
 	<%@include file="NavBar.jsp" %>
+	
+	<%
+		int numTaken = 0;
+		int numCreated = 0;
+		List<QuizResult> yourRecentlyTakenQuizzes = null;
+		List<QuizCreated> yourRecentlyCreatedQuizzes = null;
+	
+		// curUser declared in NavBar.js
+		if (curUser == null) {
+			out.println("<h1>Please Login, Redirecting...</h1>");
+			request.getSession().setAttribute("message", "To See Home Page, Please Login");
+			response.sendRedirect("Login.jsp"); 
+		} else {
+			out.println("<h1>" + curUser.name + "'s Profile</h1>");
+			numTaken = curUser.numQuizzesTaken;
+			numCreated = curUser.numQuizzesCreated;
+			yourRecentlyTakenQuizzes = um.getRecentlyTakenQuizzes(curUser);
+			yourRecentlyCreatedQuizzes = um.getRecentlyCreatedQuizzes(curUser);
+		}
+	%>
 
-	<h1><%= curUser.name %>'s Profile</h1>
 	<hr/>
 	
 	<section id="your-recently-created-quizzes" class="scroll-box-wrapper">
 		<h3>Your Recently Created Quizzes</h3>
-		<p>Quizzes created: <%= curUser.numQuizzesCreated %></p>
+		<p>Quizzes created: <%= numCreated %></p>
 		
 		<%
-			if (um == null) {
+			if (um == null || yourRecentlyCreatedQuizzes == null) {
 				out.println("<p>No Recently Created Quizzes By You</p>");
-			} else {
-				List<QuizCreated> yourRecentlyCreatedQuizzes = um.getRecentlyCreatedQuizzes(curUser);
-				
+			} else {				
 				out.println("<ul class=\"scroll-box\">");
 				
 				for (QuizCreated qc: yourRecentlyCreatedQuizzes)	
@@ -45,14 +62,12 @@
 	
 	<section id="your-recently-taken-quizzes" class="scroll-box-wrapper">
 		<h3>Your Recently Taken Quizzes</h3>
-		<p>Quizzes taken: <%= curUser.numQuizzesTaken %></p>
+		<p>Quizzes taken: <%= numTaken %></p>
 		
 		<%
-			if (um == null) {
+			if (um == null || yourRecentlyTakenQuizzes == null) {
 				out.println("<p>No Recently Taken Quizzes By You</p>");
 			} else {
-				List<QuizResult> yourRecentlyTakenQuizzes = um.getRecentlyTakenQuizzes(curUser);
-				
 				out.println("<ul class=\"scroll-box\">");
 				
 				for (QuizResult qr: yourRecentlyTakenQuizzes) {

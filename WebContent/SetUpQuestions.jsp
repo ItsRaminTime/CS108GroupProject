@@ -19,6 +19,15 @@
 <body>
 	<%@ include file="NavBar.jsp" %>
 	
+	<%
+		// curUser declared in NavBar.js
+		if (curUser == null) {
+			out.println("<h1>Please Login, Redirecting...</h1>");
+			request.getSession().setAttribute("message", "To See Home Page, Please Login");
+			response.sendRedirect("Login.jsp"); 
+		} 
+	%>
+	
 	<h1>Set Up Your Questions</h1>
 	<h3>What type of questions do you want?</h3>
 	<hr/>

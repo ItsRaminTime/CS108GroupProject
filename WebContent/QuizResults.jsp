@@ -15,6 +15,15 @@
 <body>
 	<%@include file="NavBar.jsp" %>
 	
+	<%
+		// curUser declared in NavBar.js
+		if (curUser == null) {
+			out.println("<h1>Please Login, Redirecting...</h1>");
+			request.getSession().setAttribute("message", "To See Home Page, Please Login");
+			response.sendRedirect("Login.jsp"); 
+		} 
+	%>
+	
 	<h1><%= qr.getUsername() %>'s Score: <%= qr.getScore() %> / <%= qr.getTotal() %></h1>
 	<h3>Taken on: <%= qr.getDate() %></h3>
 	<hr/>
