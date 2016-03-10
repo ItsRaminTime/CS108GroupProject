@@ -82,20 +82,6 @@
 	<hr/>
 </section>
 
-<section id="achievements">
-	<h3>Achievements</h3>
-	<%
-		if (request.getServletContext().getAttribute("achievements") == null) {
-			out.println("<p>No Achievements</p>");
-		} else {
-			ArrayList<String> achievements = (ArrayList<String>) request.getServletContext().getAttribute("achievements");
-			out.println("<p>" + achievements.size() + " Achievements:</p>");
-			// Extra Info
-		}
-	%>
-	<hr/>
-</section>
-
 <section id="messages">
 	<h3>Messages</h3>
 	<%

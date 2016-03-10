@@ -15,6 +15,9 @@
 			out.println("<li><a class=\"navbar-link\" href=\"UserList.jsp\">Find Friends</a></li>");
 			if(curUser.isAdmin) {
 				out.println("<li><a class=\"navbar-link\" href=\"AdministratorPage.jsp\">Admin Page</a></li>");
+			} else {
+				out.println("<li><a class=\"navbar-link\" href=\"Achievements.jsp\">My Achievements</a></li>");
+
 			}
 		}
 	%>

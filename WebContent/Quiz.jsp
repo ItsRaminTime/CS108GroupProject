@@ -38,6 +38,13 @@
 			out.println("<input type=\"checkbox\" name=\"answer" + i + "\" value=\"check2\">" + q.getOption2() + "/>");
 			out.println("<input type=\"checkbox\" name=\"answer" + i + "\" value=\"check3\">" + q.getOption3() + "/>");
 			out.println("<input type=\"checkbox\" name=\"answer" + i + "\" value=\"check4\">" + q.getOption4() + "/>");
+		} else if(q.getType().equals("Picture")) {
+			out.println("<input type=\"text\" name=\"answer" + i + "\" value=\"check1\">" + q.getOption1() + "/>");
+			out.println("<img src=\"" + q.getURL() + "\">");
+		} else if(q.getType().equals("MultiAnswer")) {
+			for(int k = 0; k < q.getNumAnswers(); k++) {
+				out.println("<input type=\"text\" name=\"answer" + i + k + "\"/>");
+			}
 		}
 		i++;
 	}

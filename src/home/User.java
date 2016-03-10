@@ -10,13 +10,17 @@ public class User implements java.io.Serializable {
 	public String name;
 	public String password;
 	
-	public boolean isAdmin;
+	public boolean isAdmin;		
+	
 	public ArrayList<String> quizzesTaken;
 	public ArrayList<User> friends;
 	public ArrayList<String> quizzesCreated;
 	
 	public int numQuizzesTaken;
 	public int numQuizzesCreated;
+	
+	public boolean achievedHighestScore;			//need to implement at end of quiz evaluation
+	public boolean practiceMode;
 	
 	public String lastAction;
 	
@@ -26,6 +30,8 @@ public class User implements java.io.Serializable {
 		this.name = name;
 		this.password = password;
 		isAdmin = false;
+		achievedHighestScore = false;
+		practiceMode = false;
 	}
 	
 	public static User blobToUser(Blob blob) 

@@ -13,13 +13,22 @@ public class Question implements java.io.Serializable {
 	protected String correctAnswer2 = "";
 	protected String correctAnswer3 = "";
 	protected String correctAnswer4 = "";
+	protected String url = "";
+	protected int numAnswers = 0;
 
 	
 	public boolean isCorrect() {
 		return correct;
 	}
 	
-	public String  getDisplayStr() {
+	public int getNumAnswers() {
+		return numAnswers;
+	}
+	public String getURL() {
+		return url;
+	}
+	
+	public String getDisplayStr() {
 		return displayStr;
 	}
 

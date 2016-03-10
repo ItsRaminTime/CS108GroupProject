@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -14,6 +15,9 @@ public class Quiz implements java.io.Serializable {
 	private List<Question> questions;	
 	private static int numQuizzes = 0;
 	public int nVisits = 0;
+	public HashMap<String, ArrayList<Integer>> scores;
+	public int numReported;
+	HashMap<String, Integer> ratings; 
 	
 	// Initializes quiz
 	public Quiz(String name) {
@@ -21,6 +25,8 @@ public class Quiz implements java.io.Serializable {
 		this.name = name;
 		questions = new ArrayList<Question>();
 		numQuizzes++;
+		scores = new HashMap<String, ArrayList<Integer>>();
+		ratings = new HashMap<String, Integer>();
 	}
 	
 	// Takes in a blob, returns a quiz
