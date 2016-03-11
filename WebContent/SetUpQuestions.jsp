@@ -29,8 +29,10 @@
 	%>
 	
 	<h1>Set Up Your Questions</h1>
-	<h3>What type of questions do you want?</h3>
 	<hr/>
+
+	<section>
+	<h3>What type of questions do you want?</h3><hr>
 
 	<form action="CreateQuizServlet" method="get">
 		<% 
@@ -44,6 +46,7 @@
 		
 		<input type="submit" value="Submit">
 	</form>
+	</section>
 </body>
 
 </html>

@@ -89,6 +89,29 @@ public class Database {
 	    stmt.execute();
 	}
 	
+	// Updates a single user
+	public void removeUser(User user) 
+			throws SerialException, SQLException, IOException {
+		byte[] bytes = Serializer.serialize(user);
+		Blob blob = new SerialBlob(bytes);		
+		String sql = "delete from users where name = (?) limit 1";
+	    PreparedStatement stmt = con.prepareStatement(sql);
+	    stmt.setString(1, user.name);
+	    stmt.execute();
+	}
+	
+	// Inserts a single user
+	public void insertAnnouncement(Announcement announcement) 
+			throws SerialException, SQLException, IOException {
+		byte[] bytes = Serializer.serialize(announcement);
+		Blob blob = new SerialBlob(bytes);		
+		String sql = "INSERT INTO anns (id, data) VALUES (?, ?)";
+	    PreparedStatement stmt = con.prepareStatement(sql);
+	    stmt.setLong(1, announcement.id);
+	    stmt.setBinaryStream(2, blob.getBinaryStream(), (int) blob.length());
+	    stmt.execute();
+	}
+	
 	// Call when context is destroyed
 	public void close() {
 		try {

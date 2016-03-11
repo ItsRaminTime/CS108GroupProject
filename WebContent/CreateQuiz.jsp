@@ -36,6 +36,8 @@
 	%>
 
 	<h1>Create Your Quiz</h1>
+	<hr/>
+	<section>
 	<h3>Now it's time to fill in the questions.</h3>
 	<hr/>
 	
@@ -46,15 +48,16 @@
 				
 				out.println("<p>");
 				if (types.get(i).equals("response")) {
-					out.println("Question: <input type=\"text\" name=\"question" + i + "\" required><br/>");
+					out.println("Question: <input type=\"text\" name=\"question" + i + "\" required><br/><br/>");
 					out.println("Answer: <input type=\"text\" name=\"answer" + i + "\" required>");
 				}
-				out.println("</p>");
+				out.println("</p><hr/>");
 			}
 		%>
 		
 		<input type="submit" value="Submit">
 	</form>
+	</section>
 </body>
 
 </html>

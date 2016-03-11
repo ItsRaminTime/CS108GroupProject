@@ -27,6 +27,7 @@
 	<h1><%= quiz.name %></h1>
 	<hr/>
 	
+	<section>
 	<form action="QuizServlet?id=<%= quiz.id %>" method="post">
 		<% 
 			int i = 0;
@@ -36,15 +37,14 @@
 				out.println("<p>" + q.getDisplayStr() + "</p>");
 				out.println("<input type=\"text\" name=\"answer" + i + "\"/ required>");
 				out.println("<p></p>");
+				out.println("<hr/>");
 				i++;
-				
-				if (i != quiz.getNumQuestions())
-					out.println("<hr/>");
 			}
 		%>
 	
 		<input type="submit" value="Submit Answers">
 	</form>
+	</section>
 </body>
 
 </html>

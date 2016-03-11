@@ -21,9 +21,10 @@
 	%>
 	
 	<h1>Set Up Quiz</h1>
-	<h3>Fill in basic quiz parameters.</h3>
-	<hr/>
 	
+	<hr/>
+	<section>
+	<h3>Fill in basic quiz parameters.</h3><hr/>
 	<form action="SetUpQuestions.jsp" method="get">
 		<p>
 			Name of Quiz:
@@ -37,6 +38,7 @@
 		
 		<input type="submit" value="Submit">
 	</form>
+	</section>
 </body>
 
 </html>

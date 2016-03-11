@@ -53,6 +53,10 @@ public class QuizManager {
 		}
 	}
 	
+	public int getNumQuizzes() {
+		return quizzes.size();
+	}
+	
 	// Returns a quiz corresponding to the given id
 	public Quiz getQuizById(int id) {
 		System.out.println("dskndlksnlkdsnlkdnslkfnd9999999");
@@ -62,6 +66,8 @@ public class QuizManager {
 	// Currently just returns all quizzes
 	public List<Quiz> getPopularQuizzes() {
 		List<Quiz> popularQuizzes = new ArrayList<Quiz>(quizzes.values());
+		
+		if (popularQuizzes.size() == 0) return null;
 		
 		Collections.sort(popularQuizzes, new Comparator<Quiz>() {
 	        @Override

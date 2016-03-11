@@ -28,15 +28,18 @@
 		} 
 	%>
 
-	<h1>Welcome to <%= quiz.name %></h1>
-	<h3>Created on: <%= quiz.getDate() %></h3>
-	<hr/>
+	<h1>Welcome to <%= quiz.name %> by <%= quiz.creatorName %></h1>
 	
+	<section>
+	<h3>Created on: <%= quiz.getDate() %></h3>
+	<hr/>	
 	<p>This quiz has <%= quiz.getNumQuestions() %> question(s)</p>
 	<hr/>
+	<a href="QuizServlet?id=<%= request.getParameter("id") %>">Take Quiz</a>
+	</section>
 	
 	<section id="top-results" class="scroll-box-wrapper">
-		<h3>Top Scores</h3>
+		<h3>Top Scores</h3><hr/>
 		
 		<%
 			if (quiz.getTopResults() == null) {
@@ -51,16 +54,15 @@
 					String line = "<li><a href=\"QuizResultServlet?id=" + qr.getQuizId() + "&date=" + qr.getDate() + "\">Results for: " + qr.getCreatorName();
 					line += "</a> | Date Taken: " + qr.getDate() + " | Score: " + qr.getScore() + "/" + qr.getTotal() + "</li>";
 					out.println(line);				
-					out.println("</ul>");
+					
 				}
+				out.println("</ul>");
 			}
 		%>
-		
-		<hr/>
 	</section>
 
 	<section id="top-results" class="scroll-box-wrapper">
-		<h3>Recent Activity</h3>
+		<h3>Recent Activity</h3><hr/>
 		
 		<%
 			if (quiz.getTopResults() == null) {
@@ -75,15 +77,12 @@
 					String line = "<li><a href=\"QuizResultServlet?id=" + qr.getQuizId() + "&date=" + qr.getDate() + "\">Results for: " + qr.getCreatorName();
 					line += "</a> | Date Taken: " + qr.getDate() + " | Score: " + qr.getScore() + "/" + qr.getTotal() + "</li>";
 					out.println(line);				
-					out.println("</ul>");
+					
 				}
+				out.println("</ul>");
 			}
 		%>
-		
-		<hr/>
-	</section>
-	
-	<a href="QuizServlet?id=<%= request.getParameter("id") %>">Take Quiz</a>
+	</section>	
 </body>
 
 </html>

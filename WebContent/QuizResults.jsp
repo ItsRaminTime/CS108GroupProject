@@ -25,6 +25,9 @@
 	%>
 	
 	<h1><%= qr.getUsername() %>'s Score: <%= qr.getScore() %> / <%= qr.getTotal() %></h1>
+	<hr/>
+	
+	<section>
 	<h3>Taken on: <%= qr.getDate() %></h3>
 	<hr/>
 	
@@ -46,7 +49,8 @@
 		}
 	%>
 	
-	<a href="QuizServlet?id=<%= qr.getQuizId() %>">Take Quiz Again</a> | <a href="QuizWelcome.jsp?id=<%= qr.getQuizId() %>">Back to Quiz's Summary Page</a> 
+	<a href="QuizServlet?id=<%= qr.getQuizId() %>">Take Quiz Again</a> | <a href="QuizWelcome.jsp?id=<%= qr.getQuizId() %>">Back to Quiz's Summary Page</a>
+	</section> 
 </body>
 
 </html>

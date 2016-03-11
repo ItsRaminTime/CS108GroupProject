@@ -15,10 +15,22 @@
 #navbar .navbar-link {
 	background-color: white;
 	color: black;
-	border: 1px solid black;
+	border: 2px solid black;
 }
 
 #navbar .navbar-link:hover {
     background-color: black;
 	color: white;
+}
+
+section {
+	border: 3px solid black;
+	border-radius: 5px;
+	margin-top: 20px;
+	padding: 20px;
+}
+
+body {
+	margin: 40px 300px 40px 300px;
+	min-width: 1000px;
 }

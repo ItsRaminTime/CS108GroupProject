@@ -22,26 +22,28 @@
 		int numTaken = 0;
 		int numCreated = 0;
 		List<QuizResult> yourRecentlyTakenQuizzes = null;
+		List<QuizResult> topScores = null;
 		List<QuizCreated> yourRecentlyCreatedQuizzes = null;
+		User user = um.getUserByName(request.getParameter("username"));
 	
 		// curUser declared in NavBar.js
-		if (curUser == null) {
+		if (curUser == null || user == null) {
 			out.println("<h1>Please Login, Redirecting...</h1>");
 			request.getSession().setAttribute("message", "To See Home Page, Please Login");
 			response.sendRedirect("Login.jsp"); 
 		} else {
 			out.println("<h1>" + curUser.name + "'s Profile</h1>");
-			numTaken = curUser.numQuizzesTaken;
-			numCreated = curUser.numQuizzesCreated;
-			yourRecentlyTakenQuizzes = um.getRecentlyTakenQuizzes(curUser);
-			yourRecentlyCreatedQuizzes = um.getRecentlyCreatedQuizzes(curUser);
+			numTaken = user.numQuizzesTaken;
+			numCreated = user.numQuizzesCreated;
+			yourRecentlyTakenQuizzes = um.getRecentlyTakenQuizzes(user);
+			yourRecentlyCreatedQuizzes = um.getRecentlyCreatedQuizzes(user);
+			topScores = um.getTopScores(user);
 		}
 	%>
-
 	<hr/>
 	
 	<section id="your-recently-created-quizzes" class="scroll-box-wrapper">
-		<h3>Your Recently Created Quizzes</h3>
+		<h3>Your Recently Created Quizzes</h3><hr/>
 		<p>Quizzes created: <%= numCreated %></p>
 		
 		<%
@@ -56,12 +58,10 @@
 				out.println("</ul>");
 			}
 		%>
-		
-		<hr/>
 	</section>
 	
 	<section id="your-recently-taken-quizzes" class="scroll-box-wrapper">
-		<h3>Your Recently Taken Quizzes</h3>
+		<h3>Your Recently Taken Quizzes</h3><hr/>
 		<p>Quizzes taken: <%= numTaken %></p>
 		
 		<%
@@ -79,6 +79,126 @@
 				out.println("</ul>");
 			}
 		%>
+	</section>
+	
+	<section id="top-quizzes" class="scroll-box-wrapper">
+		<h3>Your Top Scores</h3><hr/>
+				
+		<%
+			if (um == null || topScores == null) {
+				out.println("<p>No Top Scores</p>");
+			} else {				
+				out.println("<ul class=\"scroll-box\">");				
+				for (QuizResult qr: topScores)	
+					out.println("<li><a href=\"QuizWelcome.jsp?id=" + qr.getQuizId() + "\">" + qr.getQuizName() + "</a> | Score: " + qr.getScore() + "/" + qr.getTotal() + "</li>");
+				out.println("</ul>");
+			}
+		%>
+	</section>
+	
+	<section id="achievements" class="scroll-box-wrapper">
+		<div class="scroll-box">
+			<%
+				int num = 0;
+				boolean amateur = false;
+				boolean prolific = false;
+				boolean prodigious = false;
+				boolean machine = false;
+				boolean greatest = false;
+				boolean practice = false;
+				
+				if (curUser != null) {
+					if (curUser.numQuizzesCreated > 0) {
+						num++;
+						amateur = true;
+					}
+						
+					if (curUser.numQuizzesCreated >= 5) {
+						num++;
+						prolific = true;
+					}
+						
+					if (curUser.numQuizzesCreated >= 10) {
+						num++;
+						prodigious = true;
+					}
+					
+					if (curUser.numQuizzesTaken >= 10) {
+						num++;
+						machine = true;
+					}
+					
+					//if (curUser.achievedHighestScore) {
+					//	greatest = true;
+					//}
+					//if (curUser.practiceMode) {
+					//	practice = true;
+					//}
+				}
+					
+				if(amateur && prolific && prodigious && machine && greatest && practice) {
+					out.println("<h3>All 6 Achievements Unlocked! You're Killing It!</h3><hr/>");
+				} else if (!(amateur || prolific || prodigious || machine || greatest || practice)) {
+					out.println("<h3>No Achievements</h3>");
+				} else {
+					out.println("<h3>Achievements (" + num + ")</h3><hr/>");
+				}
+				
+				if(amateur) {
+					num--;
+					out.println("<p>You're an amateur! Go on like this and you'll be an expert in no time! (1 quiz created)</p><br>");
+					out.println("<img src=\"https://cdn3.iconfinder.com/data/icons/ballicons-reloaded-free/512/icon-61-128.png\"><br>");
+					
+					if (num > 0) 
+						out.println("<hr/>");
+				}
+				
+				if(prolific) {
+					num--;
+					out.println("<p>Prolific! You're making great progress! (5 quiz created)</p><br>");
+					out.println("<img src=\"https://cdn3.iconfinder.com/data/icons/ballicons-reloaded-free/512/icon-93-128.png\"><br>");
+					
+					if (num > 0) 
+						out.println("<hr/>");
+				}
+				
+				if(prodigious) {
+					num--;
+					out.println("<p>Prodigious! Wow, you're an expert! (10 quiz created)</p><br>");
+					out.println("<img src=\"https://cdn3.iconfinder.com/data/icons/ballicons-reloaded-free/512/icon-81-128.png\"><br>");
+					
+					if (num > 0) 
+						out.println("<hr/>");
+				}
+				
+				if(machine) {
+					num--;
+					out.println("<p>Taking these quizzes like a machine! (10 quiz taken)</p><br>");
+					out.println("<img src=\"https://cdn3.iconfinder.com/data/icons/ballicons-reloaded-free/512/icon-60-128.png\"><br>");
+					
+					if (num > 0) 
+						out.println("<hr/>");
+				}
+				
+				if (greatest) {
+					num--;
+					out.println("<p>Bow down. The greates of them all! (You got a high score on a quiz)</p><br>");
+					out.println("<img src=\"https://cdn3.iconfinder.com/data/icons/ballicons-reloaded-free/512/icon-82-128.png\"><br>");
+					
+					if (num > 0) 
+						out.println("<hr/>");
+				}
+				
+				if (practice) {
+					num--;
+					out.println("<p>Practice makes perfect, zen master! (You took a quiz in practice mode)</p><br>");
+					out.println("<img src=\"https://cdn3.iconfinder.com/data/icons/ballicons-reloaded-free/512/icon-57-128.png\"><br>");
+					
+					if (num > 0) 
+						out.println("<hr/>");
+				}
+			%>
+		</div>
 	</section>
 </body>
 
