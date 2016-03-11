@@ -10,13 +10,15 @@
 <body background="<%=request.getContextPath()%>/background-images/background.jpg">
 
 <%@include file="NavBar.jsp" %>
+<link href="css/intro.css" rel="stylesheet" type="text/css">
+
 
 <h1><%= request.getSession().getAttribute("message") %></h1>
 <p>Please enter proposed name and password.</p>
-<form action="CreateUserServlet" method="post">
+<form action="CreateUserServlet" method="post" class="input">
 	User Name: <input type="text" name="username"><br>
 	Password : <input type="password" name="password"><br><br>
-	<input type="submit" value="Register"><br><br>
+	<button type="submit" value="Register">Register</button>
 </form>
 </body>
 </html>

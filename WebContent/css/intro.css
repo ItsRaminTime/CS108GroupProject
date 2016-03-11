@@ -1,0 +1,72 @@
+@font-face {
+  font-family: Impact;
+}
+
+body{
+	font-family: 'Impact';
+	color: white;
+}
+
+h1{
+    text-align: center;
+    margin-top: 15%;
+    font-size: 800%;
+}
+
+p{
+	text-align: center;
+	margin-top: -4%;
+    font-size: 250%;
+}
+
+button {
+  background: #d93434;
+  background-image: -webkit-linear-gradient(top, #d93434, #2980b9);
+  background-image: -moz-linear-gradient(top, #d93434, #2980b9);
+  background-image: -ms-linear-gradient(top, #d93434, #2980b9);
+  background-image: -o-linear-gradient(top, #d93434, #2980b9);
+  background-image: linear-gradient(to bottom, #d93434, #2980b9);
+  -webkit-border-radius: 14;
+  -moz-border-radius: 14;
+  border-radius: 28px;
+  font-family: Impact;
+  color: #ffffff;
+  font-size: 33px;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none;
+}
+
+button:hover {
+  background: #fa3c3c;
+  background-image: -webkit-linear-gradient(top, #fa3c3c, #3498db);
+  background-image: -moz-linear-gradient(top, #fa3c3c, #3498db);
+  background-image: -ms-linear-gradient(top, #fa3c3c, #3498db);
+  background-image: -o-linear-gradient(top, #fa3c3c, #3498db);
+  background-image: linear-gradient(to bottom, #fa3c3c, #3498db);
+  text-decoration: none;
+}
+
+.input {
+	text-align: center;
+	font-size: 150%;
+}
+
+input {
+	font-size: 60%;
+}
+
+#Login {
+	margin-left: 500%;
+}
+
+.inline {
+	display: inline-block;
+}
+
+#Register {
+		margin-left: 475%;
+}
+
+#Admin {
+		margin-left: 720%;
+}

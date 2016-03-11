@@ -11,12 +11,21 @@
 
 <%@include file="NavBar.jsp" %>
 
-<h1><%= request.getSession().getAttribute("message") %></h1>
+<link href="css/intro.css" rel="stylesheet" type="text/css">
+
+<%
+	if (curUser == null) {
+		request.getSession().setAttribute("message", "To See Home Page, Please Login");
+	}
+%>
+
+<h1><%=request.getSession().getAttribute("message") %></h1>
 <p>Please log in.</p>
-<form action="LoginServlet" method="post">
+<form action="LoginServlet" method="post" class="input">
 	User Name: <input type="text" name="username"><br>
-	Password : <input type="password" name="password"><br><br>
-	<input type="submit" value="Login"><br><br>
+	Password: <input type="password" name="password"><br><br>
+	<button type="submit" value="Login">Login</button>
 </form>
+
 </body>
 </html>
