@@ -61,7 +61,7 @@
 		%>
 	</section>
 
-	<section id="top-results" class="scroll-box-wrapper">
+	<section id="recent-results" class="scroll-box-wrapper">
 		<h3>Recent Activity</h3><hr/>
 		
 		<%

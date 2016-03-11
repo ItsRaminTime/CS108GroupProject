@@ -40,6 +40,16 @@ public class QuizManager {
 		}
 	}
 	
+	public void removeQuizFromDb(Quiz quiz) {
+		quizzes.remove(quiz.id);
+		try {
+			db.removeQuiz(quiz);
+		} catch (SQLException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	// Inserts quiz into database
 	public void addQuizToDb(Quiz quiz) {
 		quiz.id = largestId + 1;

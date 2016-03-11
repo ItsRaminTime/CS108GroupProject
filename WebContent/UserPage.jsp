@@ -67,6 +67,8 @@
 		<%
 			if (um == null || yourRecentlyTakenQuizzes == null) {
 				out.println("<p>No Recently Taken Quizzes By You</p>");
+			} else if (yourRecentlyTakenQuizzes.size() == 0) {
+				out.println("<p>No Recently Taken Quizzes By You</p>");
 			} else {
 				out.println("<ul class=\"scroll-box\">");
 				
@@ -86,11 +88,13 @@
 				
 		<%
 			if (um == null || topScores == null) {
+				out.println("<p>No Top Scores</p>");	
+			} else if (topScores.size() == 0) {
 				out.println("<p>No Top Scores</p>");
 			} else {				
 				out.println("<ul class=\"scroll-box\">");				
 				for (QuizResult qr: topScores)	
-					out.println("<li><a href=\"QuizWelcome.jsp?id=" + qr.getQuizId() + "\">" + qr.getQuizName() + "</a> | Score: " + qr.getScore() + "/" + qr.getTotal() + "</li>");
+					out.println("<li><a href=\"QuizWelcome.jsp?id=" + qr.getQuizId() + "\">Results for " + qr.getQuizName() + "</a> | Score: " + qr.getScore() + "/" + qr.getTotal() + "</li>");
 				out.println("</ul>");
 			}
 		%>

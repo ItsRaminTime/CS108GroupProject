@@ -91,14 +91,18 @@
 			} else {
 				@SuppressWarnings("unchecked")
 				ArrayList<QuizCreated> yourRecentlyCreatedQuizzes = (ArrayList<QuizCreated>) request.getServletContext().getAttribute("yourRecentlyCreatedQuizzes");
-				out.println("<h3>Recently Created Quizzes By You (" + yourRecentlyCreatedQuizzes.size() + ")</h3><hr/>");
-				
-				out.println("<ul class=\"scroll-box\">");
-				
-				for (QuizCreated qc: yourRecentlyCreatedQuizzes)	
-					out.println("<li><a href=\"QuizWelcome.jsp?id=" + qc.quizId + "\">" + qc.quizName + "</a> | Date Created: " + qc.date + "</li>");
-				
-				out.println("</ul>");
+				if (yourRecentlyCreatedQuizzes.size() == 0) {
+					out.println("<h3>No Recently Created Quizzes By You</h3>");
+				} else {	
+					out.println("<h3>Recently Created Quizzes By You (" + yourRecentlyCreatedQuizzes.size() + ")</h3><hr/>");
+					
+					out.println("<ul class=\"scroll-box\">");
+					
+					for (QuizCreated qc: yourRecentlyCreatedQuizzes)	
+						out.println("<li><a href=\"QuizWelcome.jsp?id=" + qc.quizId + "\">" + qc.quizName + "</a> | Date Created: " + qc.date + "</li>");
+					
+					out.println("</ul>");
+				}
 			}
 		%>
 	</section>
@@ -110,17 +114,21 @@
 			} else {
 				@SuppressWarnings("unchecked")
 				ArrayList<QuizResult> yourRecentlyTakenQuizzes = (ArrayList<QuizResult>) request.getServletContext().getAttribute("yourRecentlyTakenQuizzes");
-				out.println("<h3>Recently Taken Quizzes By You (" + yourRecentlyTakenQuizzes.size() + ")</h3><hr/>");
-				
-				out.println("<ul class=\"scroll-box\">");
-				
-				for (QuizResult qr: yourRecentlyTakenQuizzes) {
-					String line = "<li><a href=\"QuizResultServlet?id=" + qr.getQuizId() + "&date=" + qr.getDate() + "\">Results for " + qr.getQuizName();
-					line += "</a> | Date Taken: " + qr.getDate() + " | Score: " + qr.getScore() + "/" + qr.getTotal() + "</li>";
-					out.println(line);
+				if (yourRecentlyTakenQuizzes.size() == 0) {
+					out.println("<h3>No Recently Taken Quizzes By You</h3>");
+				} else {
+					out.println("<h3>Recently Taken Quizzes By You (" + yourRecentlyTakenQuizzes.size() + ")</h3><hr/>");
+					
+					out.println("<ul class=\"scroll-box\">");
+					
+					for (QuizResult qr: yourRecentlyTakenQuizzes) {
+						String line = "<li><a href=\"QuizResultServlet?id=" + qr.getQuizId() + "&date=" + qr.getDate() + "\">Results for " + qr.getQuizName();
+						line += "</a> | Date Taken: " + qr.getDate() + " | Score: " + qr.getScore() + "/" + qr.getTotal() + "</li>";
+						out.println(line);
+					}
+					
+					out.println("</ul>");
 				}
-				
-				out.println("</ul>");
 			}
 		%>
 	</section>

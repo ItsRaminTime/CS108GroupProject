@@ -89,14 +89,27 @@ public class Database {
 	    stmt.execute();
 	}
 	
-	// Updates a single user
+
 	public void removeUser(User user) 
 			throws SerialException, SQLException, IOException {
+		if (user.isAdmin || user.name.equals("admin")) return;
+		
 		byte[] bytes = Serializer.serialize(user);
 		Blob blob = new SerialBlob(bytes);		
 		String sql = "delete from users where name = (?) limit 1";
 	    PreparedStatement stmt = con.prepareStatement(sql);
 	    stmt.setString(1, user.name);
+	    stmt.execute();
+	}
+	
+
+	public void removeQuiz(Quiz quiz) 
+			throws SerialException, SQLException, IOException {		
+		byte[] bytes = Serializer.serialize(quiz);
+		Blob blob = new SerialBlob(bytes);		
+		String sql = "delete from quizzes where id = (?) limit 1";
+	    PreparedStatement stmt = con.prepareStatement(sql);
+	    stmt.setLong(1, quiz.id);
 	    stmt.execute();
 	}
 	

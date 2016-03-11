@@ -42,7 +42,7 @@
 				out.println("<option value=\"response\">Response</option>");
 				out.println("</select></p>");
 			}
-		%>
+		%><hr/>
 		
 		<input type="submit" value="Submit">
 	</form>

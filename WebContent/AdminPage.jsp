@@ -18,6 +18,7 @@
 		UserManager um = (UserManager) request.getServletContext().getAttribute("um");
 		QuizManager qm = (QuizManager) request.getServletContext().getAttribute("qm");
 		List<User> users = um.getUsers();
+		List<Quiz> quizzes = qm.getPopularQuizzes();
 	
 		// curUser declared in NavBar.js
 		if (curUser == null) {
@@ -118,7 +119,7 @@
 	
 	<section id="delete-user">
 	
-		<h3>Delete users (admins cannot be deleted)</h3><hr/>
+		<h3>Click to delete users (admins cannot be deleted)</h3><hr/>
 		
 		<%
 			if (users == null || users.size() == 0) {
@@ -132,6 +133,52 @@
 						out.println("<li><a href=\"RemoveUserServlet?id=" + u.name + "\">" + u.name + "</a></li>");
 						numPrinted++;
 					}
+				}
+				
+				if (numPrinted == 0) out.println("<li>There is nothing to see here</li>");
+				
+				out.println("</ul>");
+			}
+		%>
+	</section>
+	
+	<section id="delete-quiz-results">
+	
+		<h3>Click to delete quiz results (leaves the quizzes there, just deletes the results)</h3><hr/>
+		
+		<%
+			if (quizzes == null) {
+				out.println("<p>No Quizzes</p>");
+			} else {			
+				out.println("<ul class=\"scroll-box\">");
+				int numPrinted = 0;
+				
+				for (Quiz q: quizzes) {
+					out.println("<li><a href=\"RemoveQuizServlet?id=" + q.id + "&hard=false\">" + q.name + "</a></li>");
+					numPrinted++;
+				}
+				
+				if (numPrinted == 0) out.println("<li>There is nothing to see here</li>");
+				
+				out.println("</ul>");
+			}
+		%>
+	</section>
+	
+		<section id="delete-quiz">
+	
+		<h3>Click to delete quizzes (deletes all info relating to a quiz, including the quiz)</h3><hr/>
+		
+		<%
+			if (quizzes == null) {
+				out.println("<p>No Quizzes</p>");
+			} else {			
+				out.println("<ul class=\"scroll-box\">");
+				int numPrinted = 0;
+				
+				for (Quiz q: quizzes) {
+					out.println("<li><a href=\"RemoveQuizServlet?id=" + q.id + "&hard=true\">" + q.name + "</a></li>");
+					numPrinted++;
 				}
 				
 				if (numPrinted == 0) out.println("<li>There is nothing to see here</li>");

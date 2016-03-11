@@ -34,7 +34,7 @@
 		<p>
 			Number of Question:
 			<input type="number" name="numQuestions" min="1" required/>
-		</p>
+		</p><hr/>
 		
 		<input type="submit" value="Submit">
 	</form>
