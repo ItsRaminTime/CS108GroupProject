@@ -18,6 +18,9 @@ public class User implements java.io.Serializable {
 	public int numQuizzesTaken;
 	public int numQuizzesCreated;
 	
+	public boolean achievedHighestScore = false;
+	public boolean practiceMode = false;
+	
 	public ArrayList<QuizCreated> quizzesCreated;
 	public ArrayList<QuizResult> quizzesTaken;
 	

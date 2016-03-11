@@ -165,12 +165,15 @@
 						machine = true;
 					}
 					
-					//if (curUser.achievedHighestScore) {
-					//	greatest = true;
-					//}
-					//if (curUser.practiceMode) {
-					//	practice = true;
-					//}
+					if (curUser.achievedHighestScore) {
+						num++;
+						greatest = true;
+					}
+					
+					if (curUser.practiceMode) {
+						num++;
+						practice = true;
+					}
 				}
 					
 				if(amateur && prolific && prodigious && machine && greatest && practice) {
@@ -219,7 +222,7 @@
 				
 				if (greatest) {
 					num--;
-					out.println("<p>Bow down. The greates of them all! (You got a high score on a quiz)</p><br>");
+					out.println("<p>Bow down. The greatest of them all! (You got a high score on a quiz)</p><br>");
 					out.println("<img src=\"https://cdn3.iconfinder.com/data/icons/ballicons-reloaded-free/512/icon-82-128.png\"><br>");
 					
 					if (num > 0) 

@@ -16,6 +16,7 @@
 	<%@include file="NavBar.jsp" %>
 	
 	<%
+		request.getServletContext().setAttribute("practice", request.getServletContext().getAttribute("practice"));
 		// curUser declared in NavBar.js
 		if (curUser == null) {
 			out.println("<h1>Please Login, Redirecting...</h1>");

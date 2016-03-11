@@ -35,7 +35,9 @@
 	<hr/>	
 	<p>This quiz has <%= quiz.getNumQuestions() %> question(s)</p>
 	<hr/>
-	<a href="QuizServlet?id=<%= request.getParameter("id") %>">Take Quiz</a>
+	<a href="QuizServlet?id=<%= request.getParameter("id") %>&practice=false">Take Quiz</a>
+	<hr/>
+	<a href="QuizServlet?id=<%= request.getParameter("id") %>&practice=true">Take Quiz in Practice Mode</a>
 	</section>
 	
 	<section id="top-results" class="scroll-box-wrapper">
