@@ -36,7 +36,14 @@ public class RemoveUserServlet extends HttpServlet {
 		if (!username.equals("admin")) {
 			User user = um.getUserByName(username);
 			if (!user.isAdmin) {
+				//1
+				for (QuizCreated qc: user.quizzesCreated) {
+					Quiz q = qm.getQuizById(qc.quizId);
+					q.creatorName = "";
+					qm.updateQuizInDb(q);
+				}
 			
+				//2
 				for (QuizResult qr: user.quizzesTaken) {
 					Quiz q = qm.getQuizById(qr.getQuizId());
 					List<QuizResult> newResults = new ArrayList<QuizResult>();
@@ -49,6 +56,82 @@ public class RemoveUserServlet extends HttpServlet {
 					q.results = newResults;
 					q.numTaken = newResults.size();
 					qm.updateQuizInDb(q);
+				}
+				
+				//3
+				for (User u: um.getUsers()) {
+					if (u.name.equals(user.name)) continue;
+					
+					boolean updated = false;
+					ArrayList<Message> newChallenges = new ArrayList<Message>();
+					for (Message c: u.challenges) {
+						if (c.sender.name.equals(user.name))
+							updated = true;
+						else
+							newChallenges.add(c);
+					}
+			
+					if (updated) {
+						u.challenges = newChallenges;
+						um.updateUserInDb(user);
+					}
+					
+					updated = false;
+					ArrayList<Message> newMessages = new ArrayList<Message>();
+					for (Message c: u.messages) {
+						if (c.sender.name.equals(user.name))
+							updated = true;
+						else
+							newMessages.add(c);
+					}
+			
+					if (updated) {
+						u.messages = newMessages;
+						um.updateUserInDb(user);
+					}
+					
+					
+					updated = false;
+					ArrayList<Message> newRequests = new ArrayList<Message>();
+					for (Message c: u.requests) {
+						if (c.sender.name.equals(user.name))
+							updated = true;
+						else
+							newRequests.add(c);
+					}
+			
+					if (updated) {
+						u.requests = newRequests;
+						um.updateUserInDb(user);
+					}
+					
+					updated = false;
+					ArrayList<String> newPending = new ArrayList<String>();
+					for (String s: u.pending) {
+						if (s.equals(user.name))
+							updated = true;
+						else
+							newPending.add(s);
+					}
+			
+					if (updated) {
+						u.pending = newPending;
+						um.updateUserInDb(user);
+					}
+					
+					updated = false;
+					ArrayList<User> newFriends = new ArrayList<User>();
+					for (User f: u.friends) {
+						if (f.name.equals(user.name))
+							updated = true;
+						else
+							newFriends.add(f);
+					}
+			
+					if (updated) {
+						u.friends = newFriends;
+						um.updateUserInDb(user);
+					}
 				}
 				
 				um.removeUserFromDb(user);

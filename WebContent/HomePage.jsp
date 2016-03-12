@@ -241,23 +241,68 @@
 		</div>
 	</section>
 	
-	<section id="messages">
-		<h3>Messages</h3><hr/>
-		
+	<section id="messages">		
 		<%
-			if (request.getServletContext().getAttribute("messages") == null) {
-				out.println("<p>No Messages</p>");
+			if (curUser == null) {
+				out.println("<h3>No Messages</h3>");
 			} else {
-				@SuppressWarnings("unchecked")
-				ArrayList<String> messages = (ArrayList<String>) request.getServletContext().getAttribute("messages");
-				
-				out.println("<p>" + messages.size() + " Messages:</p>");
-				out.println("<ul class=\"scroll-box\">");
-				
-				for (String s: messages)	
-					out.println("<li>" + s + "</li>");
-				
-				out.println("</ul>");
+				if (curUser.messages.size() == 0) {
+					out.println("<h3>No Messages</h3>");
+				} else {
+					out.println("<h3>Messages (" + curUser.messages.size() + ")</h3><hr/>");
+					
+					out.println("<div class=\"scroll-box\">");
+					
+					for (Message m: curUser.messages) {
+						out.println("<p><a href=\"UserPage?username=" + m.sender.name + "\">" + m.sender.name + "</a> sent you a message at: " + m.date + "</p>");
+						out.println("<p>" + m.message + "</p><hr/>");
+					}
+					
+					out.println("</div> Visit the Message Center to reply!");
+				}
+			}
+		%>
+	</section>
+	
+	<section id="challenges">		
+		<%
+			if (curUser == null) {
+				out.println("<h3>No Challenges</h3>");
+			} else {
+				if (curUser.challenges.size() == 0) {
+					out.println("<h3>No Challenges</h3>");
+				} else {
+					out.println("<h3>Challenges (" + curUser.challenges.size() + ")</h3><hr/>");
+					
+					out.println("<ul class=\"scroll-box\">");
+					
+					for (Message m: curUser.challenges) {
+						out.println("<li><a href=\"" + m.url + "\">Try Challenge</a> - " + m.message + " (" + m.date + ")</li><br/>");
+					}
+					
+					out.println("</ul>");
+				}
+			}
+		%>
+	</section>
+	
+		<section id="requests">		
+		<%
+			if (curUser == null) {
+				out.println("<h3>No Requests</h3>");
+			} else {
+				if (curUser.requests.size() == 0) {
+					out.println("<h3>No Friend Requests</h3>");
+				} else {
+					out.println("<h3>Friend Requests (" + curUser.requests.size() + ")</h3><hr/>");
+					
+					out.println("<ul class=\"scroll-box\">");
+					
+					for (Message m: curUser.requests) {
+						out.println("<li><a href=\"" + m.url + "\">Accept Request</a> - " + m.message + " (" + m.date + ")</li><br/>");
+					}
+					out.println("</ul>");
+				}
 			}
 		%>
 	</section>

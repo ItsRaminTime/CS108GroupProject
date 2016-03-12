@@ -22,6 +22,8 @@
 			out.println("<li><a class=\"navbar-link\" href=\"Achievements.jsp\">Achievements</a></li>");
 			out.println("<li><a class=\"navbar-link\" href=\"QuizLibrary.jsp\">Quiz Library</a></li>");
 			out.println("<li><a class=\"navbar-link\" href=\"SetUpQuiz.jsp\">Create Quiz</a></li>");
+			out.println("<li><a class=\"navbar-link\" href=\"MessageCenter.jsp\">Messages & Challenges</a></li>");
+			out.println("<li><a class=\"navbar-link\" href=\"FriendCenter.jsp\">Friend Center</a></li>");
 			out.println("<li><a class=\"navbar-link\" href=\"LogoutServlet\">Logout</a></li>");
 		}
 	%>	

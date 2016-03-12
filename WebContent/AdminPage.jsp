@@ -19,6 +19,11 @@
 		QuizManager qm = (QuizManager) request.getServletContext().getAttribute("qm");
 		List<User> users = um.getUsers();
 		List<Quiz> quizzes = qm.getPopularQuizzes();
+		
+		int quizzesTaken = 0;
+		if (quizzes != null)
+			if (quizzes.size() > 0)
+				for (Quiz q: quizzes) quizzesTaken += q.numTaken;
 	
 		// curUser declared in NavBar.js
 		if (curUser == null) {
@@ -35,6 +40,7 @@
 		<h3>Statistics</h3><hr/>
 		<p>Number of users: <%= um.getNumUsers() %></p>
 		<p>Number of quizzes: <%= qm.getNumQuizzes() %></p>
+		<p>Number of quizzes taken: <%= quizzesTaken %></p>
 	</section>
 	
 	<section id="make-announcement">
@@ -80,7 +86,8 @@
 			
 			for (User u: users) {
 				if (!u.isAdmin && !u.name.equals("admin")) {
-					out.println("<li><a href=\"ToggleAdminServlet?id=" + u.name + "\">" + u.name + "</a></li>");
+					out.println("<li><a href=\"ToggleAdminServlet?id=" + u.name + "\">" + u.name + "</a> | ");
+					out.println("<a href=\"UserPage.jsp?username=" + u.name + "\">View Profile</a></li>");
 					numPrinted++;	
 				}
 			}
@@ -105,7 +112,8 @@
 			
 			for (User u: users) {
 				if (u.isAdmin && !u.name.equals("admin")) {
-					out.println("<li><a href=\"ToggleAdminServlet?id=" + u.name + "\">" + u.name + "</a></li>");
+					out.println("<li><a href=\"ToggleAdminServlet?id=" + u.name + "\">" + u.name + "</a> | ");
+					out.println("<a href=\"UserPage.jsp?username=" + u.name + "\">View Profile</a></li>");
 					numPrinted++;
 				}
 			}
@@ -130,7 +138,8 @@
 				
 				for (User u: users) {
 					if (!u.isAdmin && !u.name.equals("admin")) {
-						out.println("<li><a href=\"RemoveUserServlet?id=" + u.name + "\">" + u.name + "</a></li>");
+						out.println("<li><a href=\"RemoveUserServlet?id=" + u.name + "\">" + u.name + "</a> | ");
+						out.println("<a href=\"UserPage.jsp?username=" + u.name + "\">View Profile</a></li>");
 						numPrinted++;
 					}
 				}
@@ -154,7 +163,8 @@
 				int numPrinted = 0;
 				
 				for (Quiz q: quizzes) {
-					out.println("<li><a href=\"RemoveQuizServlet?id=" + q.id + "&hard=false\">" + q.name + "</a></li>");
+					out.println("<li><a href=\"RemoveQuizServlet?id=" + q.id + "&hard=false\">ID: " + q.id + ", Name: " + q.name + "</a> | ");
+					out.println("<a href=\"QuizWelcome.jsp?id=" + q.id + "\">View Quiz</a></li>");
 					numPrinted++;
 				}
 				
@@ -177,7 +187,8 @@
 				int numPrinted = 0;
 				
 				for (Quiz q: quizzes) {
-					out.println("<li><a href=\"RemoveQuizServlet?id=" + q.id + "&hard=true\">" + q.name + "</a></li>");
+					out.println("<li><a href=\"RemoveQuizServlet?id=" + q.id + "&hard=true\">ID: " + q.id + ", Name: " + q.name + "</a> | ");
+					out.println("<a href=\"QuizWelcome.jsp?id=" + q.id + "\">View Quiz</a></li>");
 					numPrinted++;
 				}
 				

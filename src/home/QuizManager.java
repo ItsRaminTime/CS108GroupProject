@@ -69,7 +69,6 @@ public class QuizManager {
 	
 	// Returns a quiz corresponding to the given id
 	public Quiz getQuizById(int id) {
-		System.out.println("dskndlksnlkdsnlkdnslkfnd9999999");
 		return quizzes.get(id);
 	}
 	

@@ -34,6 +34,7 @@ public class RemoveQuizServlet extends HttpServlet {
 		QuizManager qm = (QuizManager) this.getServletContext().getAttribute("qm");
 		int quizid = Integer.parseInt(request.getParameter("id"));
 		boolean hard = request.getParameter("hard").equals("true");
+		System.out.println(request.getParameter("hard"));
 		Quiz quiz = qm.getQuizById(quizid);
 		
 		for (User u: um.getUsers()) {
@@ -41,6 +42,7 @@ public class RemoveQuizServlet extends HttpServlet {
 			boolean updated = false;
 			ArrayList<QuizResult> newResults = new ArrayList<QuizResult>();
 			
+			//1
 			for (QuizResult qr: u.quizzesTaken) {
 				if (qr.getQuizId() == quiz.id) {
 					updated = true;
@@ -55,7 +57,24 @@ public class RemoveQuizServlet extends HttpServlet {
 				um.updateUserInDb(u);
 			}
 			
-			if (hard) {
+			//2
+			updated = false;
+			ArrayList<Message> newChallenges = new ArrayList<Message>();
+			for (Message m: u.challenges) {
+				if (m.qid == quiz.id) {
+					updated = true;
+				} else {
+					newChallenges.add(m);
+				}
+			}
+			
+			if (updated) {
+				u.challenges = newChallenges;
+				um.updateUserInDb(u);
+			}
+			
+			//3
+			if (hard && quiz.creatorName != "") {
 				updated = false;
 				ArrayList<QuizCreated> newCreated = new ArrayList<QuizCreated>();
 				
@@ -81,6 +100,7 @@ public class RemoveQuizServlet extends HttpServlet {
 		session.setAttribute("curUser", um.getUserByName(curUser.name));
 		
 		if (hard) {
+			System.out.println("slkdnflkdnsf");
 			qm.removeQuizFromDb(quiz);
 		} else {
 			quiz.results.clear();

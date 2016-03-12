@@ -32,7 +32,7 @@
 			request.getSession().setAttribute("message", "To See Home Page, Please Login");
 			response.sendRedirect("Login.jsp"); 
 		} else {
-			out.println("<h1>" + curUser.name + "'s Profile</h1>");
+			out.println("<h1>" + user.name + "'s Profile</h1>");
 			numTaken = user.numQuizzesTaken;
 			numCreated = user.numQuizzesCreated;
 			yourRecentlyTakenQuizzes = um.getRecentlyTakenQuizzes(user);
@@ -42,8 +42,35 @@
 	%>
 	<hr/>
 	
+		<%
+			if (!curUser.name.equals(user.name)) {
+				
+				out.println("<section>");
+				out.println("<h1>Reach Out to " + user.name + "</h1><hr/>");
+				out.println("<form action=\"SendMessageServlet\" action=\"post\">");
+				
+				out.println("Message Body:<br/><br/><textarea cols=\"100\" rows=\"5\" name=\"text\"></textarea><br/><br/>");
+				out.println("<input type=\"hidden\" name=\"user\" value=\"" + user.name + "\">");
+				out.println("<input type=\"submit\" value=\"Send Message\">");
+				
+				out.println("</form>");
+				
+				if (!user.name.equals(curUser.name) && !curUser.pending.contains(user.name) && !curUser.isFriendsWith(user.name)) {
+					out.println("<hr/>");
+					out.println("<form action=\"SendRequestServlet\" action=\"post\">");
+					out.println("<input type=\"hidden\" name=\"user\" value=\"" + user.name + "\">");
+					out.println("<input type=\"submit\" value=\"Send Friend Request\">");
+					
+					out.println("</form>");
+				}
+				
+				out.println("</section>");
+			}
+		%>
+
+	
 	<section id="your-recently-created-quizzes" class="scroll-box-wrapper">
-		<h3>Your Recently Created Quizzes</h3><hr/>
+		<h3>Recently Created Quizzes</h3><hr/>
 		<p>Quizzes created: <%= numCreated %></p>
 		
 		<%
@@ -61,7 +88,7 @@
 	</section>
 	
 	<section id="your-recently-taken-quizzes" class="scroll-box-wrapper">
-		<h3>Your Recently Taken Quizzes</h3><hr/>
+		<h3>Recently Taken Quizzes</h3><hr/>
 		<p>Quizzes taken: <%= numTaken %></p>
 		
 		<%
@@ -84,7 +111,7 @@
 	</section>
 	
 	<section id="top-quizzes" class="scroll-box-wrapper">
-		<h3>Your Top Scores</h3><hr/>
+		<h3>Top Scores</h3><hr/>
 				
 		<%
 			if (um == null || topScores == null) {
@@ -111,33 +138,33 @@
 				boolean greatest = false;
 				boolean practice = false;
 				
-				if (curUser != null) {
-					if (curUser.numQuizzesCreated > 0) {
+				if (user != null) {
+					if (user.numQuizzesCreated > 0) {
 						num++;
 						amateur = true;
 					}
 						
-					if (curUser.numQuizzesCreated >= 5) {
+					if (user.numQuizzesCreated >= 5) {
 						num++;
 						prolific = true;
 					}
 						
-					if (curUser.numQuizzesCreated >= 10) {
+					if (user.numQuizzesCreated >= 10) {
 						num++;
 						prodigious = true;
 					}
 					
-					if (curUser.numQuizzesTaken >= 10) {
+					if (user.numQuizzesTaken >= 10) {
 						num++;
 						machine = true;
 					}
 					
-					if (curUser.achievedHighestScore) {
+					if (user.achievedHighestScore) {
 						num++;
 						greatest = true;
 					}
 					
-					if (curUser.practiceMode) {
+					if (user.practiceMode) {
 						num++;
 						practice = true;
 					}
@@ -206,6 +233,28 @@
 				}
 			%>
 		</div>
+	</section>
+	
+	<section id="friends">		
+		<%
+			if (user == null) {
+				out.println("<h3>No Friends</h3>");
+			} else {
+				if (user.friends.size() == 0) {
+					out.println("<h3>No Friends</h3>");
+				} else {
+					out.println("<h3>Friends (" + user.friends.size() + ")</h3><hr/>");
+					
+					out.println("<ul class=\"scroll-box\">");
+					
+					for (User u: user.friends) {
+						out.println("<li><a href=\"UserPage.jsp?username=" + u.name + "\">" + u.name + "</a></li><br/>");
+					}
+					
+					out.println("</ul>");
+				}
+			}
+		%>
 	</section>
 </body>
 

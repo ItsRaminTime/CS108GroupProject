@@ -24,8 +24,11 @@ public class User implements java.io.Serializable {
 	public ArrayList<QuizCreated> quizzesCreated;
 	public ArrayList<QuizResult> quizzesTaken;
 	
-	public ArrayList<String> friends;
-	public ArrayList<Message> messageList;
+	public ArrayList<User> friends;
+	public ArrayList<String> pending;
+	public ArrayList<Message> requests;
+	public ArrayList<Message> challenges;
+	public ArrayList<Message> messages;
 	
 	public User(String name, String password) {
 		this.name = name;
@@ -39,8 +42,11 @@ public class User implements java.io.Serializable {
 		quizzesCreated = new ArrayList<QuizCreated>();
 		quizzesTaken = new ArrayList<QuizResult>();
 		
-		friends = new ArrayList<String>();
-		messageList = new ArrayList<Message>();
+		friends = new ArrayList<User>();
+		pending = new ArrayList<String>();
+		requests = new ArrayList<Message>();
+		challenges = new ArrayList<Message>();
+		messages = new ArrayList<Message>();
 	}
 	
 	public static User createAdmin() {
@@ -77,6 +83,13 @@ public class User implements java.io.Serializable {
 			e.printStackTrace();
 			return "";
 		}
+	}
+	
+	public boolean isFriendsWith(String friend) {
+		for (User u: friends) {
+			if (u.name.equals(friend)) return true;
+		}
+		return false;
 	}
 	
 	/*
