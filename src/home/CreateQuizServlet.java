@@ -1,5 +1,6 @@
 package home;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +12,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import org.apache.tomcat.util.http.fileupload.FileItemFactory;
+import org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory;
+import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
 /**
  * Servlet implementation class CreateQuizServlet
@@ -71,6 +76,35 @@ public class CreateQuizServlet extends HttpServlet {
 				String curQuestion = request.getParameter("question" + i);
 				String curAnswer = request.getParameter("answer" + i);
 				quiz.addQuestion(new ResponseQuestion(curQuestion, curAnswer));
+			} else if (types.get(i).equals("fillblank")) {
+				String curQuestion = request.getParameter("question" + i);
+				String curAnswer = request.getParameter("answer" + i);
+				quiz.addQuestion(new FillBlankQuestion(curQuestion, curAnswer));
+			} else if (types.get(i).equals("truefalse")) {
+				String curQuestion = request.getParameter("question" + i);
+				String curAnswer = request.getParameter("answer" + i);
+				quiz.addQuestion(new TrueFalseQuestion(curQuestion, curAnswer));
+			} else if (types.get(i).equals("multchoice")) {
+				String curQuestion = request.getParameter("question" + i);
+				String curAnswer = request.getParameter("answer" + i);
+				List<String> options = new ArrayList<String>();
+				
+				options.add(request.getParameter("optiona" + i));
+				options.add(request.getParameter("optionb" + i));
+				options.add(request.getParameter("optionc" + i));
+				options.add(request.getParameter("optiond" + i));
+			
+				if (!options.contains(curAnswer))
+					curAnswer = options.get(0);
+				
+				quiz.addQuestion(new MultipleChoiceQuestion(curQuestion, curAnswer, options));
+			} else if (types.get(i).equals("pic")) {
+				String curQuestion = request.getParameter("question" + i);
+                String root = request.getContextPath() + "/uploads";
+                File uploadedFile = new File(root + "/" + curQuestion);
+				String curAnswer = request.getParameter("answer" + i);
+				curQuestion = "<img src=\"" + root + "/" + curQuestion + "\">";
+				quiz.addQuestion(new PictureQuestion(curQuestion, curAnswer));
 			}
 		}
 		

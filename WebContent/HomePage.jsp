@@ -307,26 +307,28 @@
 		%>
 	</section>
 	
-	<section id="friend-activity">
-		<h3>Friend Activity</h3><hr/>
-		
+	<section id="friends">		
 		<%
-			if (request.getServletContext().getAttribute("friendActivity") == null) {
-				out.println("<p>No Friend Activity</p>");
+			if (curUser == null) {
+				out.println("<h3>No Friends</h3>");
 			} else {
-				@SuppressWarnings("unchecked")
-				ArrayList<String> friendActivity = (ArrayList<String>) request.getServletContext().getAttribute("friendActivity");
-				
-				out.println("<p>" + friendActivity.size() + " Friend Activity Item(s):</p>");
-				out.println("<ul class=\"scroll-box\">");
-				
-				for (String s: friendActivity)	
-					out.println("<li>" + s + "</li>");
-				
-				out.println("</ul>");
+				if (curUser.friends.size() == 0) {
+					out.println("<h3>No Friends</h3>");
+				} else {
+					out.println("<h3>Friends (" + curUser.friends.size() + ")</h3><hr/>");
+					
+					out.println("<ul class=\"scroll-box\">");
+					
+					for (User u: curUser.friends) {
+						out.println("<li><a href=\"UserPage.jsp?username=" + u.name + "\">" + u.name + "</a></li><br/>");
+					}
+					
+					out.println("</ul>");
+				}
 			}
 		%>
 	</section>
+	
 </body>
 
 </html>

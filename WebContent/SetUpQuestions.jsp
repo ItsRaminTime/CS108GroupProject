@@ -40,6 +40,10 @@
 				out.println("<p>Question Type for #" + (i+1) + ":");
 				out.println("<select name=\"questionType" + i + "\">");
 				out.println("<option value=\"response\">Response</option>");
+				out.println("<option value=\"fillblank\">Fill In The Blank</option>");
+				out.println("<option value=\"truefalse\">True/False</option>");
+				out.println("<option value=\"multchoice\">Multiple Choice</option>");
+				out.println("<option value=\"pic\">Picture Response</option>");
 				out.println("</select></p>");
 			}
 		%><hr/>

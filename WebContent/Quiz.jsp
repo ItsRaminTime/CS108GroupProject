@@ -36,7 +36,19 @@
 				int j = i+1;
 				out.println("<h3>Question " + j + ")</h3>");
 				out.println("<p>" + q.getDisplayStr() + "</p>");
-				out.println("<input type=\"text\" name=\"answer" + i + "\"/ required>");
+				
+				if (q.getType().equals("response") || q.getType().equals("fillblank") || q.getType().equals("pic")){
+					out.println("<input type=\"text\" name=\"answer" + i + "\"/ required>");	
+				} else if (q.getType().equals("truefalse")) {
+					out.println("True: <input type=\"radio\" name=\"answer" + i + "\" value=\"true\" required>");
+					out.println("False: <input type=\"radio\" name=\"answer" + i + "\" value=\"false\" required>");
+				} else if (q.getType().equals("multchoice")) {
+					out.println("Multiple Choice: <select name=\"answer" + i + "\" required>");
+					for (String s: q.getOptions())
+						out.println("<option value=\"" + s + "\">" + s +"</option>");
+					out.println("</select>");
+				}
+				
 				out.println("<p></p>");
 				out.println("<hr/>");
 				i++;

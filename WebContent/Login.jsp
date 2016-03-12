@@ -20,7 +20,7 @@
 	<hr/>
 	
 	<section>
-	<h3>Please log in. Usernames and passwords are case sensitive.</h3><hr/>
+	<h3>Please log in. Entering "admin" as both the name and password grants access to default admin account.</h3><hr/>
 	
 	<form action="LoginServlet" method="post">
 		<p>User Name: <input type="text" name="username" required><br></p>
