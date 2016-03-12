@@ -34,7 +34,6 @@ public class RemoveQuizServlet extends HttpServlet {
 		QuizManager qm = (QuizManager) this.getServletContext().getAttribute("qm");
 		int quizid = Integer.parseInt(request.getParameter("id"));
 		boolean hard = request.getParameter("hard").equals("true");
-		System.out.println(request.getParameter("hard"));
 		Quiz quiz = qm.getQuizById(quizid);
 		
 		for (User u: um.getUsers()) {
@@ -100,7 +99,6 @@ public class RemoveQuizServlet extends HttpServlet {
 		session.setAttribute("curUser", um.getUserByName(curUser.name));
 		
 		if (hard) {
-			System.out.println("slkdnflkdnsf");
 			qm.removeQuizFromDb(quiz);
 		} else {
 			quiz.results.clear();

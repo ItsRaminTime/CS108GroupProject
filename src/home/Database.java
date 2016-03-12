@@ -3,14 +3,14 @@ package home;
 import java.io.IOException;                                                        
 import java.sql.*;                                                                                                                                
 import javax.sql.rowset.serial.SerialBlob;                                         
-import javax.sql.rowset.serial.SerialException; 
+import javax.sql.rowset.serial.SerialException;
 
 public class Database {
 
-	public static final String MYSQL_USERNAME = "ccs108masons";
-	public static final String MYSQL_PASSWORD = "sdkgH2RmvvmxBjrZ";
-	public static final String MYSQL_DATABASE_SERVER = "mysql-user.stanford.edu";
-	public static final String MYSQL_DATABASE_NAME = "c_cs108_masons";
+	public final static String account = MyDBInfo.MYSQL_USERNAME;
+	public final static String password = MyDBInfo.MYSQL_PASSWORD;
+	public final static String server = MyDBInfo.MYSQL_DATABASE_SERVER;
+	public final static String database = MyDBInfo.MYSQL_DATABASE_NAME;
 
 	Connection con;
 	Statement stmt;
@@ -18,9 +18,9 @@ public class Database {
 	public Database() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://" + MYSQL_DATABASE_SERVER, MYSQL_USERNAME, MYSQL_PASSWORD);
+			con = DriverManager.getConnection("jdbc:mysql://" + server, account, password);
 			stmt = con.createStatement();
-			stmt.executeQuery("USE " + MYSQL_DATABASE_NAME);
+			stmt.executeQuery("USE " + database);
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.exit(0);
