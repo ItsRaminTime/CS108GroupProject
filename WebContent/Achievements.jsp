@@ -7,7 +7,8 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 	<title>My Achievements</title>
 </head>
-<body background="<%=request.getContextPath()%>/background-images/background.jpg">
+ <body>
+<body background="https://images5.alphacoders.com/381/381373.jpg">
 
 <%@include file="NavBar.jsp" %>
 

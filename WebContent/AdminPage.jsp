@@ -11,7 +11,8 @@
 <%@ page import ="home.*" %>
 <%@ page import ="java.util.*" %>
 
-<body>
+<body background="https://images5.alphacoders.com/381/381373.jpg">
+
 	<%@ include file="NavBar.jsp" %>
 	
 	<%

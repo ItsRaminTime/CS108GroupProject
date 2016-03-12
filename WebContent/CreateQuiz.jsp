@@ -23,7 +23,7 @@
 	<title>Create New Quiz</title>
 </head>
 
-<body>
+<body background="https://images5.alphacoders.com/381/381373.jpg">
 	<%@ include file="NavBar.jsp" %>
 	
 	<%

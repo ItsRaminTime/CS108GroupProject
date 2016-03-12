@@ -99,12 +99,12 @@ public class CreateQuizServlet extends HttpServlet {
 				
 				quiz.addQuestion(new MultipleChoiceQuestion(curQuestion, curAnswer, options));
 			} else if (types.get(i).equals("pic")) {
-				String curQuestion = request.getParameter("question" + i);
-                String root = request.getContextPath() + "/uploads";
-                File uploadedFile = new File(root + "/" + curQuestion);
-				String curAnswer = request.getParameter("answer" + i);
-				curQuestion = "<img src=\"" + root + "/" + curQuestion + "\">";
-				quiz.addQuestion(new PictureQuestion(curQuestion, curAnswer));
+				String curQuestion = request.getParameter("question" + i);              
+			                 String root = request.getContextPath() + "/uploads";            
+			                File uploadedFile = new File(root + "/" + curQuestion);         
+				        String curAnswer = request.getParameter("answer" + i);                  
+				         curQuestion = "<img src=\"" + curQuestion + "\">";                      
+				   quiz.addQuestion(new PictureQuestion(curQuestion, curAnswer)); 
 			}
 		}
 		

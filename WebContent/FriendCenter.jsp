@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Friend Center</title>
 </head>
-<body>
+<body background="https://images5.alphacoders.com/381/381373.jpg">
 
 	<%@ page import ="home.*" %>
 	<%@ page import ="java.util.*" %>
