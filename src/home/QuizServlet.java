@@ -31,7 +31,10 @@ public class QuizServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		QuizManager qm = (QuizManager) this.getServletContext().getAttribute("qm");
-		Quiz quiz = qm.getQuizById(Integer.parseInt(request.getParameter("id")));		
+		Quiz quiz = qm.getQuizById(Integer.parseInt(request.getParameter("id")));
+		String pracstr = request.getParameter("practice");
+		boolean practice = pracstr.equals("true");	
+		request.getServletContext().setAttribute("practice", practice);
 		
 		if (quiz == null) {
 			request.getServletContext().setAttribute("QuizRankings", qm.getPopularQuizzes());
@@ -61,24 +64,36 @@ public class QuizServlet extends HttpServlet {
 		} else {
 			List<Question> allQuestions = quiz.getQuestions();
 			int i = 0;
+			int correct = 0;
 			
 			for (Question q: allQuestions) {
 				q.setResponse(request.getParameter("answer" + i));
+				if (q.correct) correct++;
 				i++;
 			}
+			
+			int high = 0;
+			for (QuizResult r: quiz.results)
+				if (r.getScore() > high) high = r.getScore();
 			
 			QuizResult qr = new QuizResult(quiz, curUser.name, allQuestions);
 			request.getServletContext().setAttribute("quizResult", qr);
 			
-			curUser.quizzesTaken.add(qr);
-			curUser.numQuizzesTaken++;
-			quiz.addResult(qr);
-			qm.updateQuizInDb(quiz);
+			if ((boolean) request.getServletContext().getAttribute("practice")) {
+				curUser.practiceMode = true;
+			} else {
+				if (correct > 0 && correct >= high) curUser.achievedHighestScore = true;
+				curUser.quizzesTaken.add(qr);
+				curUser.numQuizzesTaken++;
+				quiz.addResult(qr);
+				qm.updateQuizInDb(quiz);
+			}
+			
 			um.updateUserInDb(curUser);
-
-			RequestDispatcher dispatcher = request.getRequestDispatcher("QuizResults.jsp");
-			dispatcher.forward(request, response);
 		}
+		
+		RequestDispatcher dispatcher = request.getRequestDispatcher("QuizResults.jsp");
+		dispatcher.forward(request, response);
 	}
 
 }

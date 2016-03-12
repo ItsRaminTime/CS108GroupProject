@@ -12,10 +12,22 @@
 	<title>Quiz Results</title>
 </head>
 
-<body>
+<body background="https://images5.alphacoders.com/381/381373.jpg">
 	<%@include file="NavBar.jsp" %>
 	
+	<%
+		// curUser declared in NavBar.js
+		if (curUser == null) {
+			out.println("<h1>Please Login, Redirecting...</h1>");
+			request.getSession().setAttribute("message", "To See Home Page, Please Login");
+			response.sendRedirect("Login.jsp"); 
+		} 
+	%>
+	
 	<h1><%= qr.getUsername() %>'s Score: <%= qr.getScore() %> / <%= qr.getTotal() %></h1>
+	<hr/>
+	
+	<section>
 	<h3>Taken on: <%= qr.getDate() %></h3>
 	<hr/>
 	
@@ -37,7 +49,8 @@
 		}
 	%>
 	
-	<a href="QuizServlet?id=<%= qr.getQuizId() %>">Take Quiz Again</a> | <a href="QuizWelcome.jsp?id=<%= qr.getQuizId() %>">Back to Quiz's Summary Page</a> 
+	<a href="QuizWelcome.jsp?id=<%= qr.getQuizId() %>">Back to Quiz's Summary Page</a>
+	</section> 
 </body>
 
 </html>

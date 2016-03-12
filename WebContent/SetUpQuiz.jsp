@@ -8,13 +8,23 @@
 	<title>Set Up Quiz</title>
 </head>
 
-<body>
+<body background="https://images5.alphacoders.com/381/381373.jpg">
 	<%@ include file="NavBar.jsp" %>
 	
-	<h1>Set Up Quiz</h1>
-	<h3>Fill in basic quiz parameters.</h3>
-	<hr/>
+	<%
+		// curUser declared in NavBar.js
+		if (curUser == null) {
+			out.println("<h1>Please Login, Redirecting...</h1>");
+			request.getSession().setAttribute("message", "To See Home Page, Please Login");
+			response.sendRedirect("Login.jsp"); 
+		} 
+	%>
 	
+	<h1>Set Up Quiz</h1>
+	
+	<hr/>
+	<section>
+	<h3>Fill in basic quiz parameters.</h3><hr/>
 	<form action="SetUpQuestions.jsp" method="get">
 		<p>
 			Name of Quiz:
@@ -24,10 +34,11 @@
 		<p>
 			Number of Question:
 			<input type="number" name="numQuestions" min="1" required/>
-		</p>
+		</p><hr/>
 		
 		<input type="submit" value="Submit">
 	</form>
+	</section>
 </body>
 
 </html>

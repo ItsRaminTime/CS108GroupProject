@@ -40,6 +40,16 @@ public class QuizManager {
 		}
 	}
 	
+	public void removeQuizFromDb(Quiz quiz) {
+		quizzes.remove(quiz.id);
+		try {
+			db.removeQuiz(quiz);
+		} catch (SQLException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	// Inserts quiz into database
 	public void addQuizToDb(Quiz quiz) {
 		quiz.id = largestId + 1;
@@ -53,15 +63,20 @@ public class QuizManager {
 		}
 	}
 	
+	public int getNumQuizzes() {
+		return quizzes.size();
+	}
+	
 	// Returns a quiz corresponding to the given id
 	public Quiz getQuizById(int id) {
-		System.out.println("dskndlksnlkdsnlkdnslkfnd9999999");
 		return quizzes.get(id);
 	}
 	
 	// Currently just returns all quizzes
 	public List<Quiz> getPopularQuizzes() {
 		List<Quiz> popularQuizzes = new ArrayList<Quiz>(quizzes.values());
+		
+		if (popularQuizzes.size() == 0) return null;
 		
 		Collections.sort(popularQuizzes, new Comparator<Quiz>() {
 	        @Override

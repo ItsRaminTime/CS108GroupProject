@@ -13,19 +13,21 @@
 	<title>Login</title>
 </head>
 
-<body>
+<body background="https://images5.alphacoders.com/381/381373.jpg">
 	<%@ include file="NavBar.jsp" %>
 	
 	<h1><%= message %></h1>
 	<hr/>
 	
-	<h3>Please log in. Usernames and passwords are case sensitive.</h3>
+	<section>
+	<h3>Please log in. Entering "admin" as both the name and password grants access to default admin account.</h3><hr/>
 	
 	<form action="LoginServlet" method="post">
-		<p>User Name: <input type="text" name="username"><br></p>
-		<p>Password: <input type="password" name="password"><br></p>
+		<p>User Name: <input type="text" name="username" required><br></p>
+		<p>Password: <input type="password" name="password" required><br></p>
 		<input type="submit" value="Login">
 	</form>
+	</section>
 </body>
 
 </html>

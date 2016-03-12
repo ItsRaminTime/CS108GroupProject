@@ -23,10 +23,21 @@
 	<title>Create New Quiz</title>
 </head>
 
-<body>
+<body background="https://images5.alphacoders.com/381/381373.jpg">
 	<%@ include file="NavBar.jsp" %>
+	
+	<%
+		// curUser declared in NavBar.js
+		if (curUser == null) {
+			out.println("<h1>Please Login, Redirecting...</h1>");
+			request.getSession().setAttribute("message", "To See Home Page, Please Login");
+			response.sendRedirect("Login.jsp"); 
+		} 
+	%>
 
 	<h1>Create Your Quiz</h1>
+	<hr/>
+	<section>
 	<h3>Now it's time to fill in the questions.</h3>
 	<hr/>
 	
@@ -37,15 +48,35 @@
 				
 				out.println("<p>");
 				if (types.get(i).equals("response")) {
-					out.println("Question: <input type=\"text\" name=\"question" + i + "\" required><br/>");
+					out.println("Question: <input type=\"text\" name=\"question" + i + "\" required><br/><br/>");
+					out.println("Answer: <input type=\"text\" name=\"answer" + i + "\" required>");
+				} else if (types.get(i).equals("fillblank")) {
+					out.println("Type a '%' wherever you want a blank. For example, '% is cool' becomes '_______ is cool.'<br/><br/>");
+					out.println("Question: <input type=\"text\" name=\"question" + i + "\" required><br/><br/>");
+					out.println("Answer: <input type=\"text\" name=\"answer" + i + "\" required>");
+				} else if (types.get(i).equals("truefalse")) {
+					out.println("Question: <input type=\"text\" name=\"question" + i + "\" required><br/><br/>");
+					out.println("True: <input type=\"radio\" name=\"answer" + i + "\" value=\"true\" required>");
+					out.println("False: <input type=\"radio\" name=\"answer" + i + "\" value=\"false\" required>");
+				} else if (types.get(i).equals("multchoice")) {
+					out.println("Answer must match one of the options, otherwise a random option is chosen as the correct one.<br/><br/>");
+					out.println("Question: <input type=\"text\" name=\"question" + i + "\" required><br/><br/>");
+					out.println("Option A: <input type=\"text\" name=\"optiona" + i + "\" required><br/>");
+					out.println("Option B: <input type=\"text\" name=\"optionb" + i + "\" required><br/>");
+					out.println("Option C: <input type=\"text\" name=\"optionc" + i + "\" required><br/>");
+					out.println("Option D: <input type=\"text\" name=\"optiond" + i + "\" required><br/><br/>");
+					out.println("Answer: <input type=\"text\" name=\"answer" + i + "\" required>");
+				} else if (types.get(i).equals("pic")) {
+					out.println("Enter a url: <input type=\"text\" name=\"question" + i + "\" required><br/><br/>");
 					out.println("Answer: <input type=\"text\" name=\"answer" + i + "\" required>");
 				}
-				out.println("</p>");
+				out.println("</p><hr/>");
 			}
 		%>
 		
 		<input type="submit" value="Submit">
 	</form>
+	</section>
 </body>
 
 </html>

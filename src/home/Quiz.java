@@ -22,7 +22,7 @@ public class Quiz implements java.io.Serializable {
 	public String creatorName;
 	public int numTaken;
 	private List<Question> questions;
-	private List<QuizResult> results;
+	public List<QuizResult> results;
 	Date date;
 	
 	// Initializes quiz

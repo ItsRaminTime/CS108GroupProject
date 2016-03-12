@@ -3,14 +3,14 @@ package home;
 import java.io.IOException;                                                        
 import java.sql.*;                                                                                                                                
 import javax.sql.rowset.serial.SerialBlob;                                         
-import javax.sql.rowset.serial.SerialException; 
+import javax.sql.rowset.serial.SerialException;
 
 public class Database {
 
-	public static final String MYSQL_USERNAME = "ccs108masons";
-	public static final String MYSQL_PASSWORD = "sdkgH2RmvvmxBjrZ";
-	public static final String MYSQL_DATABASE_SERVER = "mysql-user.stanford.edu";
-	public static final String MYSQL_DATABASE_NAME = "c_cs108_masons";
+	public final static String account = MyDBInfo.MYSQL_USERNAME;
+	public final static String password = MyDBInfo.MYSQL_PASSWORD;
+	public final static String server = MyDBInfo.MYSQL_DATABASE_SERVER;
+	public final static String database = MyDBInfo.MYSQL_DATABASE_NAME;
 
 	Connection con;
 	Statement stmt;
@@ -18,9 +18,9 @@ public class Database {
 	public Database() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://" + MYSQL_DATABASE_SERVER, MYSQL_USERNAME, MYSQL_PASSWORD);
+			con = DriverManager.getConnection("jdbc:mysql://" + server, account, password);
 			stmt = con.createStatement();
-			stmt.executeQuery("USE " + MYSQL_DATABASE_NAME);
+			stmt.executeQuery("USE " + database);
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.exit(0);
@@ -86,6 +86,42 @@ public class Database {
 	    PreparedStatement stmt = con.prepareStatement(sql);
 	    stmt.setBinaryStream(1, blob.getBinaryStream(), (int) blob.length());
 	    stmt.setString(2, user.name);
+	    stmt.execute();
+	}
+	
+
+	public void removeUser(User user) 
+			throws SerialException, SQLException, IOException {
+		if (user.isAdmin || user.name.equals("admin")) return;
+		
+		byte[] bytes = Serializer.serialize(user);
+		Blob blob = new SerialBlob(bytes);		
+		String sql = "delete from users where name = (?) limit 1";
+	    PreparedStatement stmt = con.prepareStatement(sql);
+	    stmt.setString(1, user.name);
+	    stmt.execute();
+	}
+	
+
+	public void removeQuiz(Quiz quiz) 
+			throws SerialException, SQLException, IOException {		
+		byte[] bytes = Serializer.serialize(quiz);
+		Blob blob = new SerialBlob(bytes);		
+		String sql = "delete from quizzes where id = (?) limit 1";
+	    PreparedStatement stmt = con.prepareStatement(sql);
+	    stmt.setLong(1, quiz.id);
+	    stmt.execute();
+	}
+	
+	// Inserts a single user
+	public void insertAnnouncement(Announcement announcement) 
+			throws SerialException, SQLException, IOException {
+		byte[] bytes = Serializer.serialize(announcement);
+		Blob blob = new SerialBlob(bytes);		
+		String sql = "INSERT INTO anns (id, data) VALUES (?, ?)";
+	    PreparedStatement stmt = con.prepareStatement(sql);
+	    stmt.setLong(1, announcement.id);
+	    stmt.setBinaryStream(2, blob.getBinaryStream(), (int) blob.length());
 	    stmt.execute();
 	}
 	

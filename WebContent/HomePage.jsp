@@ -11,7 +11,7 @@
 	<title>Home Page</title>
 </head>
 
-<body>
+<body background="https://images5.alphacoders.com/381/381373.jpg">
 	<%@ include file="NavBar.jsp" %>
 
 	<%
@@ -25,41 +25,35 @@
 		}
 	%>
 	<hr/>
-	
-	
-	<section id="announcements" class="scroll-box-wrapper">
-		<h3>Announcements</h3>
 		
+	<section id="announcements">
 		<%
-			if (request.getServletContext().getAttribute("announcements") == null) {
-				out.println("<p>No Announcements</p>");
-			} else {
-				@SuppressWarnings("unchecked")
-				ArrayList<String> announcements = (ArrayList<String>) request.getServletContext().getAttribute("announcements");
+			AnnouncementManager am = (AnnouncementManager) request.getServletContext().getAttribute("am");
+			List<Announcement> anns = am.getAnns();
+		
+			if (anns == null || anns.size() == 0) {
+				out.println("<h3>No Announcements</h3>");
+			} else {				
+				out.println("<h3>Announcements (" + anns.size() + ")</h3><hr/>");
+				out.println("<p class=\"scroll-box\">");
 				
-				out.println("<p>" + announcements.size() + " Announcement(s):</p>");
-				out.println("<ul class=\"scroll-box\">");
+				for (Announcement an: anns)
+					out.println("Posted on: " + an.date + "<p>" + an.message + "</p><hr/>");
 				
-				for (String s: announcements)	
-					out.println("<li>" + s + "</li>");
-				
-				out.println("</ul>");
+				out.println("All announcements are posted by admin accounts.</p>");
 			}
 		%>
-		
-		<hr/>
 	</section>
 
-	<section id="popular-quizzes" class="scroll-box-wrapper">
-		<h3>Popular Quizzes</h3>
-		
+	<section id="popular-quizzes">		
 		<%
 			if (request.getServletContext().getAttribute("popularQuizzes") == null) {
-				out.println("<p>No Popular Quizzes</p>");
+				out.println("<h3>No Popular Quizzes</h3>");
 			} else {
 				@SuppressWarnings("unchecked")
 				ArrayList<Quiz> popularQuizzes = (ArrayList<Quiz>) request.getServletContext().getAttribute("popularQuizzes");
 				
+				out.println("<h3>Popular Quizzes (" + popularQuizzes.size() + ")</h3><hr/>");
 				out.println("<ul class=\"scroll-box\">");
 				
 				for (Quiz q: popularQuizzes)	
@@ -68,19 +62,17 @@
 				out.println("</ul>");
 			}
 		%>
-		
-		<hr/>
 	</section>
 
-	<section id="recently-created-quizzes" class="scroll-box-wrapper">
-		<h3>Recently Created Quizzes</h3>
-		
+	<section id="recently-created-quizzes">
 		<%
 			if (request.getServletContext().getAttribute("recentlyCreatedQuizzes") == null) {
-				out.println("<p>No Recently Created Quizzes</p>");
+				out.println("<h3>No Recently Created Quizzes</h3>");
 			} else {
 				@SuppressWarnings("unchecked")
 				ArrayList<Quiz> recentlyCreatedQuizzes = (ArrayList<Quiz>) request.getServletContext().getAttribute("recentlyCreatedQuizzes");
+				out.println("<h3>Recently Created Quizzes (" + recentlyCreatedQuizzes.size() + ")</h3><hr/>");
+
 				
 				out.println("<ul class=\"scroll-box\">");
 				
@@ -90,123 +82,253 @@
 				out.println("</ul>");
 			}
 		%>
-		
-		<hr/>
 	</section>
 	
-	<section id="your-recently-created-quizzes" class="scroll-box-wrapper">
-		<h3>Your Recently Created Quizzes</h3>
-		
+	<section id="your-recently-created-quizzes">
 		<%
 			if (request.getServletContext().getAttribute("yourRecentlyCreatedQuizzes") == null) {
-				out.println("<p>No Recently Created Quizzes By You</p>");
+				out.println("<h3>No Recently Created Quizzes By You</h3>");
 			} else {
 				@SuppressWarnings("unchecked")
 				ArrayList<QuizCreated> yourRecentlyCreatedQuizzes = (ArrayList<QuizCreated>) request.getServletContext().getAttribute("yourRecentlyCreatedQuizzes");
-				
-				out.println("<ul class=\"scroll-box\">");
-				
-				for (QuizCreated qc: yourRecentlyCreatedQuizzes)	
-					out.println("<li><a href=\"QuizWelcome.jsp?id=" + qc.quizId + "\">" + qc.quizName + "</a> | Date Created: " + qc.date + "</li>");
-				
-				out.println("</ul>");
+				if (yourRecentlyCreatedQuizzes.size() == 0) {
+					out.println("<h3>No Recently Created Quizzes By You</h3>");
+				} else {	
+					out.println("<h3>Recently Created Quizzes By You (" + yourRecentlyCreatedQuizzes.size() + ")</h3><hr/>");
+					
+					out.println("<ul class=\"scroll-box\">");
+					
+					for (QuizCreated qc: yourRecentlyCreatedQuizzes)	
+						out.println("<li><a href=\"QuizWelcome.jsp?id=" + qc.quizId + "\">" + qc.quizName + "</a> | Date Created: " + qc.date + "</li>");
+					
+					out.println("</ul>");
+				}
 			}
 		%>
-		
-		<hr/>
 	</section>
 	
-	<section id="your-recently-taken-quizzes" class="scroll-box-wrapper">
-		<h3>Your Recently Taken Quizzes</h3>
-		
+	<section id="your-recently-taken-quizzes">		
 		<%
 			if (request.getServletContext().getAttribute("yourRecentlyTakenQuizzes") == null) {
-				out.println("<p>No Recently Taken Quizzes By You</p>");
+				out.println("<h3>No Recently Taken Quizzes By You</h3>");
 			} else {
 				@SuppressWarnings("unchecked")
 				ArrayList<QuizResult> yourRecentlyTakenQuizzes = (ArrayList<QuizResult>) request.getServletContext().getAttribute("yourRecentlyTakenQuizzes");
+				if (yourRecentlyTakenQuizzes.size() == 0) {
+					out.println("<h3>No Recently Taken Quizzes By You</h3>");
+				} else {
+					out.println("<h3>Recently Taken Quizzes By You (" + yourRecentlyTakenQuizzes.size() + ")</h3><hr/>");
+					
+					out.println("<ul class=\"scroll-box\">");
+					
+					for (QuizResult qr: yourRecentlyTakenQuizzes) {
+						String line = "<li><a href=\"QuizResultServlet?id=" + qr.getQuizId() + "&date=" + qr.getDate() + "\">Results for " + qr.getQuizName();
+						line += "</a> | Date Taken: " + qr.getDate() + " | Score: " + qr.getScore() + "/" + qr.getTotal() + "</li>";
+						out.println(line);
+					}
+					
+					out.println("</ul>");
+				}
+			}
+		%>
+	</section>
+	
+	<section id="achievements">
+		<div class="scroll-box">
+			<%
+				int num = 0;
+				boolean amateur = false;
+				boolean prolific = false;
+				boolean prodigious = false;
+				boolean machine = false;
+				boolean greatest = false;
+				boolean practice = false;
 				
-				out.println("<ul class=\"scroll-box\">");
-				
-				for (QuizResult qr: yourRecentlyTakenQuizzes) {
-					String line = "<li><a href=\"QuizResultServlet?id=" + qr.getQuizId() + "&date=" + qr.getDate() + "\">Results for " + qr.getQuizName();
-					line += "</a> | Date Taken: " + qr.getDate() + " | Score: " + qr.getScore() + "/" + qr.getTotal() + "</li>";
-					out.println(line);
+				if (curUser != null) {
+					if (curUser.numQuizzesCreated > 0) {
+						num++;
+						amateur = true;
+					}
+						
+					if (curUser.numQuizzesCreated >= 5) {
+						num++;
+						prolific = true;
+					}
+						
+					if (curUser.numQuizzesCreated >= 10) {
+						num++;
+						prodigious = true;
+					}
+					
+					if (curUser.numQuizzesTaken >= 10) {
+						num++;
+						machine = true;
+					}
+					
+					if (curUser.achievedHighestScore) {
+						num++;
+						greatest = true;
+					}
+					
+					if (curUser.practiceMode) {
+						num++;
+						practice = true;
+					}
+				}
+					
+				if(amateur && prolific && prodigious && machine && greatest && practice) {
+					out.println("<h3>All Achievements Unlocked! You're Killing It!</h3><hr/>");
+				} else if (!(amateur || prolific || prodigious || machine || greatest || practice)) {
+					out.println("<h3>No Achievements</h3>");
+				} else {
+					out.println("<h3>Achievements (" + num + ")</h3><hr/>");
 				}
 				
-				out.println("</ul>");
-			}
-		%>
-		
-		<hr/>
+				if(amateur) {
+					num--;
+					out.println("<p>You're an amateur! Go on like this and you'll be an expert in no time! (1 quiz created)</p><br>");
+					out.println("<img src=\"https://cdn3.iconfinder.com/data/icons/ballicons-reloaded-free/512/icon-61-128.png\"><br>");
+					
+					if (num > 0) 
+						out.println("<hr/>");
+				}
+				
+				if(prolific) {
+					num--;
+					out.println("<p>Prolific! You're making great progress! (5 quiz created)</p><br>");
+					out.println("<img src=\"https://cdn3.iconfinder.com/data/icons/ballicons-reloaded-free/512/icon-93-128.png\"><br>");
+					
+					if (num > 0) 
+						out.println("<hr/>");
+				}
+				
+				if(prodigious) {
+					num--;
+					out.println("<p>Prodigious! Wow, you're an expert! (10 quiz created)</p><br>");
+					out.println("<img src=\"https://cdn3.iconfinder.com/data/icons/ballicons-reloaded-free/512/icon-81-128.png\"><br>");
+					
+					if (num > 0) 
+						out.println("<hr/>");
+				}
+				
+				if(machine) {
+					num--;
+					out.println("<p>Taking these quizzes like a machine! (10 quiz taken)</p><br>");
+					out.println("<img src=\"https://cdn3.iconfinder.com/data/icons/ballicons-reloaded-free/512/icon-60-128.png\"><br>");
+					
+					if (num > 0) 
+						out.println("<hr/>");
+				}
+				
+				if (greatest) {
+					num--;
+					out.println("<p>Bow down. The greatest of them all! (You got a high score on a quiz)</p><br>");
+					out.println("<img src=\"https://cdn3.iconfinder.com/data/icons/ballicons-reloaded-free/512/icon-82-128.png\"><br>");
+					
+					if (num > 0) 
+						out.println("<hr/>");
+				}
+				
+				if (practice) {
+					num--;
+					out.println("<p>Practice makes perfect, zen master! (You took a quiz in practice mode)</p><br>");
+					out.println("<img src=\"https://cdn3.iconfinder.com/data/icons/ballicons-reloaded-free/512/icon-57-128.png\"><br>");
+					
+					if (num > 0) 
+						out.println("<hr/>");
+				}
+			%>
+		</div>
 	</section>
 	
-	<section id="achievements" class="scroll-box-wrapper">
-		<h3>Achievements</h3>
-		
+	<section id="messages">		
 		<%
-			if (request.getServletContext().getAttribute("achievements") == null) {
-				out.println("<p>No Achievements</p>");
+			if (curUser == null) {
+				out.println("<h3>No Messages</h3>");
 			} else {
-				@SuppressWarnings("unchecked")
-				ArrayList<String> achievements = (ArrayList<String>) request.getServletContext().getAttribute("achievements");
-				
-				out.println("<p>" + achievements.size() + " Achievement(s):</p>");
-				out.println("<ul class=\"scroll-box\">");
-				
-				for (String s: achievements)	
-					out.println("<li>" + s + "</li>");
-				
-				out.println("</ul>");
+				if (curUser.messages.size() == 0) {
+					out.println("<h3>No Messages</h3>");
+				} else {
+					out.println("<h3>Messages (" + curUser.messages.size() + ")</h3><hr/>");
+					
+					out.println("<div class=\"scroll-box\">");
+					
+					for (Message m: curUser.messages) {
+						out.println("<p><a href=\"UserPage?username=" + m.sender.name + "\">" + m.sender.name + "</a> sent you a message at: " + m.date + "</p>");
+						out.println("<p>" + m.message + "</p><hr/>");
+					}
+					
+					out.println("</div> Visit the Message Center to reply!");
+				}
 			}
 		%>
-		
-		<hr/>
 	</section>
 	
-	<section id="messages" class="scroll-box-wrapper">
-		<h3>Messages</h3>
-		
+	<section id="challenges">		
 		<%
-			if (request.getServletContext().getAttribute("messages") == null) {
-				out.println("<p>No Messages</p>");
+			if (curUser == null) {
+				out.println("<h3>No Challenges</h3>");
 			} else {
-				@SuppressWarnings("unchecked")
-				ArrayList<String> messages = (ArrayList<String>) request.getServletContext().getAttribute("messages");
-				
-				out.println("<p>" + messages.size() + " Messages:</p>");
-				out.println("<ul class=\"scroll-box\">");
-				
-				for (String s: messages)	
-					out.println("<li>" + s + "</li>");
-				
-				out.println("</ul>");
+				if (curUser.challenges.size() == 0) {
+					out.println("<h3>No Challenges</h3>");
+				} else {
+					out.println("<h3>Challenges (" + curUser.challenges.size() + ")</h3><hr/>");
+					
+					out.println("<ul class=\"scroll-box\">");
+					
+					for (Message m: curUser.challenges) {
+						out.println("<li><a href=\"" + m.url + "\">Try Challenge</a> - " + m.message + " (" + m.date + ")</li><br/>");
+					}
+					
+					out.println("</ul>");
+				}
 			}
 		%>
-		
-		<hr/>
 	</section>
 	
-	<section id="friend-activity" class="scroll-box-wrapper">
-		<h3>Friend Activity</h3>
-		
+		<section id="requests">		
 		<%
-			if (request.getServletContext().getAttribute("friendActivity") == null) {
-				out.println("<p>No Friend Activity</p>");
+			if (curUser == null) {
+				out.println("<h3>No Requests</h3>");
 			} else {
-				@SuppressWarnings("unchecked")
-				ArrayList<String> friendActivity = (ArrayList<String>) request.getServletContext().getAttribute("friendActivity");
-				
-				out.println("<p>" + friendActivity.size() + " Friend Activity Item(s):</p>");
-				out.println("<ul class=\"scroll-box\">");
-				
-				for (String s: friendActivity)	
-					out.println("<li>" + s + "</li>");
-				
-				out.println("</ul>");
+				if (curUser.requests.size() == 0) {
+					out.println("<h3>No Friend Requests</h3>");
+				} else {
+					out.println("<h3>Friend Requests (" + curUser.requests.size() + ")</h3><hr/>");
+					
+					out.println("<ul class=\"scroll-box\">");
+					
+					for (Message m: curUser.requests) {
+						out.println("<li><a href=\"" + m.url + "\">Accept Request</a> - " + m.message + " (" + m.date + ")</li><br/>");
+					}
+					out.println("</ul>");
+				}
 			}
 		%>
 	</section>
+	
+	<section id="friends">		
+		<%
+			if (curUser == null) {
+				out.println("<h3>No Friends</h3>");
+			} else {
+				if (curUser.friends.size() == 0) {
+					out.println("<h3>No Friends</h3>");
+				} else {
+					out.println("<h3>Friends (" + curUser.friends.size() + ")</h3><hr/>");
+					
+					out.println("<ul class=\"scroll-box\">");
+					
+					for (User u: curUser.friends) {
+						out.println("<li><a href=\"UserPage.jsp?username=" + u.name + "\">" + u.name + "</a></li><br/>");
+					}
+					
+					out.println("</ul>");
+				}
+			}
+		%>
+	</section>
+	
 </body>
 
 </html>
