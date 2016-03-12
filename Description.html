@@ -1,0 +1,76 @@
+Mason Stricklin (masons)
+Nathan Fenner (nfenner)
+Ramin Ahmari (rahmari)
+
+CS 108 Group Project
+
+I will first list some random design decisions, then I will go page-by-page and 
+list out all the features.
+
+1) FIRST, make sure you are using the database schema called quiz_site.sql. It
+is in the same directory as this file.
+
+2) You can always login with the username and password both being "admin". It
+gives you access to a default admin account. Whenever we detect that there is no
+user in the database named "admin", we create a new one, so there is always an 
+admin.
+
+3) If you are not logged in, you will be directed to the login screen. You can
+only access the login screen and the create user screen when you are not logged.
+This is to prevent non-members from snooping around the site.
+
+4) You navigate around the site by the navbar.
+
+Now I will go page-by-page:
+
+1) Hompage Contains:
+- Announcements list
+- Popular Quizzes List - links to quizzes
+- Recently Created Quizzes List - links to quizzes
+- Your Recently Created Quizzes List - links to quizzes
+- Your Recently Taken Quizzes List - links to quiz result page
+- Achievements - displays images
+- Messages - links to sender's account, so you can see the profile of who sent
+- Challenges - challenge messages link to quizzes, so you can "accept challenge"
+- Friend Requests - must accept friend requests before finalized
+- Friends - you can click on your friends to see their accounts
+
+2) Admin Portal
+- Only accessible if you are an admin
+- You can post announcements that will be seen by everyone on their home pages
+- you can give and take admin rights from users
+- you can delete users
+    - when a user is deleted, all of there messages, pending friend requests,
+      outgoing challenges, outgoing messages are deleted
+    - also, any quizzes they created will not display a creator any more
+    - quiz results are delted and no longer displayed
+    - they are also removed from friends lists
+    -
+- Deleting quizzes can also be done. You can either wipe out all the results for
+  a quiz, or complete wipe any trace of it (including outgoing challenges) 
+
+3) User Page
+- If you are looking at someone else's page, you can send them messages or
+  friend requests (note you cannot send multiple requests until the person has
+  accepted)
+- If you click on it in the navbar, it shows your profile, but it can also
+  display other peoples profiles
+- Your Recently Created Quizzes List - links to quizzes
+- Your Recently Taken Quizzes List - links to quiz result page
+- Your top quiz score list, links to the quiz scores
+- achievements
+- friends
+
+4) Achievements
+- We added achievements and little icons. They are the default ones mentioned
+  in the handout
+
+5) Quiz Library
+- Displays all the quizzes sorted by both date and popularity (number of times
+  taken)
+
+6) Individual Quiz Page
+- You can take the quiz
+- You can take it in practice mode, meaning no data is saved
+- It shows top scores and recent scores (links to the result pages for these scores)
+- also you
